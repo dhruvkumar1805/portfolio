@@ -27,13 +27,15 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${GeistSans.variable} ${GeistMono.variable} ${instrumentSerif.variable}`}
     >
-      <body className="bg-black text-white antialiased font-sans">
+      <body className="antialiased font-sans">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem={false}
         >
-          <div className="mx-auto max-w-3xl px-6">{children}</div>
+          <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-300 ease-in-out">
+            <div className="mx-auto max-w-3xl px-6">{children}</div>
+          </div>
         </ThemeProvider>
       </body>
     </html>
