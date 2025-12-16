@@ -3,7 +3,7 @@ import { Github, Twitter, Linkedin, Mail, FileText } from "lucide-react";
 export function LetsConnect() {
   return (
     <section className="mt-20">
-      <p className="text-xl text-center text-neutral-500 dark:text-neutral-400">
+      <p className="text-xl text-center text-neutral-800 dark:text-neutral-400">
         Let's connect
       </p>
       <p className="mt-1 mb-12 text-center text-sm text-neutral-500 dark:text-neutral-400">

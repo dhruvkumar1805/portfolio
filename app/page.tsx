@@ -11,7 +11,6 @@ import { SectionDivider } from "@/components/SectionDivider";
 export default function Home() {
   return (
     <main>
-      <Header />
       <Hero />
       <Intro />
       <SectionDivider />

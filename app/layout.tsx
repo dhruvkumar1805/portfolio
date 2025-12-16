@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import { Instrument_Serif } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
+import { Header } from "@/components/Header";
 
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
@@ -37,7 +38,10 @@ export default function RootLayout({
           enableSystem={false}
         >
           <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white">
-            <div className="mx-auto max-w-3xl px-6">{children}</div>
+            <div className="mx-auto max-w-3xl px-6">
+              <Header />
+              {children}
+            </div>
           </div>
         </ThemeProvider>
       </body>
