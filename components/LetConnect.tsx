@@ -6,7 +6,7 @@ export function LetsConnect() {
       <p className="text-xl text-center text-neutral-500 dark:text-neutral-400">
         Let's connect
       </p>
-      <p className="mt-1 mb-6 text-center text-sm text-neutral-500 dark:text-neutral-400">
+      <p className="mt-1 mb-12 text-center text-sm text-neutral-500 dark:text-neutral-400">
         Find me on these platforms
       </p>
 
