@@ -7,7 +7,7 @@ export function CallToAction() {
 
       <div className="mt-6">
         <a
-          href="https://calendly.com/your-link"
+          href="https://cal.com/dhruv-kumar-zqgdhb/15min"
           target="_blank"
           rel="noreferrer"
           className="
