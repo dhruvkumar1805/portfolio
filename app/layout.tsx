@@ -22,18 +22,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${GeistSans.variable} ${GeistMono.variable} ${instrumentSerif.variable}`}
-    >
-      <body className="antialiased font-sans">
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={[
+          GeistSans.variable,
+          GeistMono.variable,
+          instrumentSerif.variable,
+          "antialiased font-sans",
+        ].join(" ")}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem={false}
         >
-          <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-300 ease-in-out">
+          <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white">
             <div className="mx-auto max-w-3xl px-6">{children}</div>
           </div>
         </ThemeProvider>

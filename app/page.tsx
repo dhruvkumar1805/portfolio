@@ -1,26 +1,29 @@
-import { GithubGraph } from "@/components/github";
+import { GithubGraphClient } from "@/components/GithubGraphClient";
 import { Github, Twitter, Linkedin } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { TechStackMarquee } from "@/components/TechStackMarquee";
+import { CallToAction } from "@/components/CallToAction";
+import { Footer } from "@/components/Footer";
+import { LetsConnect } from "@/components/LetConnect";
 
 export default function Home() {
   return (
     <main>
       <header className="flex items-center justify-between py-6">
-        <span className="font-medium tracking-wider text-xl font-serif">
+        <span className="font-medium tracking-wider text-xl font-serif transition-transform duration-500 ease-out hover:scale-[1.08] cursor-pointer">
           Dhruv
         </span>
 
         <nav className="flex items-center gap-4 text-neutral-600 dark:text-neutral-400">
           <a
             href="#proof"
-            className="hover:text-black dark:hover:text-white transition-colors font-serif tracking-wider"
+            className="relative font-serif tracking-wider text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:bg-current after:origin-left after:scale-x-0 after:transition-transform after:duration-500 hover:after:scale-x-100"
           >
             proof of work
           </a>
           <a
             href="#blogs"
-            className="hover:text-black dark:hover:text-white transition-colors font-serif tracking-wider"
+            className="relative font-serif tracking-wider text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:bg-current after:origin-left after:scale-x-0 after:transition-transform after:duration-500 hover:after:scale-x-100"
           >
             blogs
           </a>
@@ -97,15 +100,21 @@ export default function Home() {
             about writing code that is easy to reason about, scales predictably,
             and doesn’t become a liability six months down the line.
           </p>
+          <div className="mt-20 h-px w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
         </div>
       </div>
+      <TechStackMarquee />
+      <div className="mt-20 h-px w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
 
       <div className="mt-20">
-        <h1 className="mb-6 text-xl text-neutral-700 dark:text-neutral-300">
-          GitHub Contributions · @dhruvkumar1805
+        <h1 className="text-xl text-center text-neutral-700 dark:text-neutral-300">
+          GitHub Contributions
         </h1>
+        <p className="mb-12 text-center text-sm text-neutral-600 dark:text-neutral-400">
+          Daily activity across open-source and personal projects
+        </p>
 
-        <GithubGraph
+        <GithubGraphClient
           username="dhruvkumar1805"
           blockMargin={2}
           lightColorPalette={[
@@ -124,7 +133,12 @@ export default function Home() {
           ]}
         />
       </div>
-      <TechStackMarquee />
+
+      <div className="mt-20 h-px w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
+      <CallToAction />
+      <div className="mt-20 h-px w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
+      <LetsConnect />
+      <Footer />
     </main>
   );
 }

@@ -51,11 +51,11 @@ const Icons = () => (
 export function TechStackMarquee() {
   return (
     <section className="mt-20">
-      <h2 className="mb-2 text-xl text-neutral-700 dark:text-neutral-300">
+      <h2 className="text-center text-xl text-neutral-700 dark:text-neutral-300">
         Stack I use
       </h2>
 
-      <p className="mb-6 text-sm text-neutral-600 dark:text-neutral-400">
+      <p className="mb-6 text-center text-sm text-neutral-600 dark:text-neutral-400">
         Tools I regularly use to build and ship products
       </p>
 
@@ -63,7 +63,7 @@ export function TechStackMarquee() {
         <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 bg-gradient-to-r from-white dark:from-black to-transparent" />
         <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 bg-gradient-to-l from-white dark:from-black to-transparent" />
 
-        <div className="flex my-4">
+        <div className="flex mt-6">
           <div className="flex min-w-max gap-8 text-neutral-600 dark:text-neutral-400 animate-marquee hover:[animation-play-state:paused]">
             <Icons />
             <Icons />
