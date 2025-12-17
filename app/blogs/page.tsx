@@ -24,8 +24,7 @@ export default function BlogsPage() {
             "
           >
             <blockquote className="font-serif tracking-wide text-lg text-neutral-700 dark:text-neutral-300 italic">
-              “The best time to plant a tree was 20 years ago. The second best
-              time is now.”
+              “The best moment to begin has passed. The next best is now.”
             </blockquote>
 
             <p className="mt-4 text-sm text-neutral-500">

@@ -8,7 +8,7 @@ export function Intro() {
           <img
             src="/avatar.png"
             alt="Avatar"
-            className="h-24 w-24 rounded-full"
+            className="h-26 w-26 rounded-full"
           />
           <div className="ml-6">
             <h1 className="font-serif text-start text-4xl">Dhruv Kumar</h1>
