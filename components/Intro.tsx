@@ -2,29 +2,36 @@ import { Github, Twitter, Linkedin } from "lucide-react";
 
 export function Intro() {
   return (
-    <section className="mt-8 flex items-start gap-5">
-      <img src="/avatar.png" alt="Avatar" className="h-16 w-16 rounded-full" />
-
+    <section className="mt-8 flex flex-col sm:flex-row sm:items-start gap-6 sm:gap-5 text-center sm:text-left">
       <div>
-        <h1 className="font-serif text-4xl">Dhruv Kumar</h1>
+        <div className="flex">
+          <img
+            src="/avatar.png"
+            alt="Avatar"
+            className="h-24 w-24 rounded-full"
+          />
+          <div className="ml-6">
+            <h1 className="font-serif text-start text-4xl">Dhruv Kumar</h1>
 
-        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-          Full-Stack Developer
-        </p>
+            <p className="mt-1 text-sm text-start text-neutral-600 dark:text-neutral-400">
+              Full-Stack Developer
+            </p>
 
-        <div className="mt-3 flex items-center gap-4 text-neutral-600 dark:text-neutral-400">
-          <Social href="https://github.com/dhruvkumar1805">
-            <Github />
-          </Social>
-          <Social href="https://x.com/dhruvkumar1805">
-            <Twitter />
-          </Social>
-          <Social href="https://linkedin.com/in/dhruvkumar1805">
-            <Linkedin />
-          </Social>
+            <div className="mt-3 flex items-center gap-4 text-neutral-600 dark:text-neutral-400">
+              <Social href="https://github.com/dhruvkumar1805">
+                <Github />
+              </Social>
+              <Social href="https://x.com/dhruvkumar1805">
+                <Twitter />
+              </Social>
+              <Social href="https://linkedin.com/in/dhruvkumar1805">
+                <Linkedin />
+              </Social>
+            </div>
+          </div>
         </div>
 
-        <p className="mt-8 max-w-xl text-lg text-neutral-700 dark:text-neutral-300">
+        <p className="mt-6 text-lg text-start text-neutral-700 dark:text-neutral-300">
           I build end-to-end web applications with a strong emphasis on clean
           architecture, performance, and long-term maintainability. I focus on
           writing thoughtful, predictable code that scales well over time and

@@ -9,7 +9,7 @@ export default function BlogsPage() {
           Blogs
         </h1>
 
-        <p className="mt-4 max-w-xl text-neutral-700 dark:text-neutral-300">
+        <p className="mt-4 max-w-xl text-neutral-600 dark:text-neutral-400">
           Reflections on building software and learning along the way.
         </p>
       </section>

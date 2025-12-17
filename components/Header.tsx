@@ -14,7 +14,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-md bg-white/70 dark:bg-black/60 border-b border-neutral-200/50 dark:border-neutral-800/50">
-      <div className="mx-auto max-w-3xl px-6 py-4 flex items-center justify-between">
+      <div className="mx-auto max-w-3xl py-4 flex items-center justify-between">
         <Link
           href="/"
           className="font-medium tracking-wider text-xl font-serif
