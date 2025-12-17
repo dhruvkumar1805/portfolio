@@ -7,21 +7,42 @@ import { CallToAction } from "@/components/CallToAction";
 import { LetsConnect } from "@/components/LetConnect";
 import { Footer } from "@/components/Footer";
 import { SectionDivider } from "@/components/SectionDivider";
+import { FadeIn } from "@/components/FadeIn";
 
 export default function Home() {
   return (
     <main>
-      <Hero />
-      <Intro />
-      <SectionDivider />
-      <TechStackMarquee />
-      <SectionDivider />
-      <GithubSection />
-      <SectionDivider />
-      <CallToAction />
-      <SectionDivider />
-      <LetsConnect />
-      <Footer />
+      <FadeIn delay={0.1}>
+        <Hero />
+      </FadeIn>
+      <FadeIn delay={0.1}>
+        <Intro />
+      </FadeIn>
+      <FadeIn delay={0.1}>
+        <SectionDivider />
+      </FadeIn>
+      <FadeIn delay={0.1}>
+        <TechStackMarquee />
+      </FadeIn>
+      <FadeIn delay={0.1}>
+        <SectionDivider />
+      </FadeIn>
+      <FadeIn delay={0.1}>
+        <GithubSection />
+      </FadeIn>
+      <FadeIn delay={0.1}>
+        <SectionDivider />
+      </FadeIn>
+      <FadeIn delay={0.1}>
+        <CallToAction />
+      </FadeIn>
+      <FadeIn delay={0.1}>
+        <SectionDivider />
+      </FadeIn>
+      <FadeIn delay={0.1}>
+        <LetsConnect />
+      </FadeIn>
+        <Footer />
     </main>
   );
 }
