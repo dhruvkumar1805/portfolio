@@ -19,8 +19,8 @@ import {
 import { SimpleIcon } from "@/components/SimpleIcon";
 
 const StackItem = ({ icon, label }: { icon: any; label: string }) => (
-  <div className="flex flex-col items-center gap-2 min-w-[72px]">
-    <SimpleIcon icon={icon} size={40} />
+  <div className="flex flex-col items-center gap-2 min-w-18">
+    <SimpleIcon icon={icon} size={46} />
     <span className="text-xs font-medium text-neutral-600 dark:text-neutral-400">
       {label}
     </span>
