@@ -15,20 +15,31 @@ export default function Nav() {
     function onScroll() {
       const scrollY = window.scrollY;
       const threshold = window.innerHeight * 0.4;
+      const atBottom =
+        scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+
       let current: string | null = null;
-      for (const link of navLinks) {
-        const el = document.getElementById(link.id);
-        if (!el) continue;
-        const top = el.offsetTop;
-        if (scrollY + threshold >= top) {
-          current = link.id;
+      if (atBottom) {
+        current = navLinks[navLinks.length - 1].id;
+      } else {
+        for (const link of navLinks) {
+          const el = document.getElementById(link.id);
+          if (!el) continue;
+          const top = el.offsetTop;
+          if (scrollY + threshold >= top) {
+            current = link.id;
+          }
         }
       }
       setActive(scrollY < 80 ? null : current);
     }
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   useEffect(() => {
