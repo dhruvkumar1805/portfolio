@@ -49,8 +49,9 @@ export default function Stack() {
                         setActiveTool(tool);
                         setActiveCategory(cat.category);
                       }}
-                      className="cursor-pointer border-0 bg-transparent p-0 align-baseline transition-colors duration-200"
+                      className="cursor-pointer border-0 bg-transparent p-0 transition-colors duration-200"
                       style={{
+                        display: "inline",
                         fontFamily: "var(--font-geist-sans)",
                         fontSize: tool.daily ? "clamp(21px, 3vw, 30px)" : "16px",
                         fontWeight: tool.daily ? 600 : 400,
@@ -67,11 +68,23 @@ export default function Stack() {
                       {tool.name}
                     </button>
                     {ti < cat.tools.length - 1 && (
-                      <span className="mx-2 text-ink-3">/</span>
+                      <span
+                        className="mx-2 text-ink-3"
+                        style={{ fontSize: "14px", fontWeight: 300 }}
+                      >
+                        /
+                      </span>
                     )}
                   </span>
                 ))}
-                {ci < stack.length - 1 && <span className="mx-2 text-ink-3">/</span>}
+                {ci < stack.length - 1 && (
+                  <span
+                    className="mx-2 text-ink-3"
+                    style={{ fontSize: "14px", fontWeight: 300 }}
+                  >
+                    /
+                  </span>
+                )}
               </span>
             ))}
           </p>
