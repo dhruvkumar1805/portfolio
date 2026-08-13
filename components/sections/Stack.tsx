@@ -1,9 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { stack, type StackTool } from "@/lib/site-config";
 import Reveal from "@/components/ui/Reveal";
+
+const flatTools = stack.flatMap((cat) =>
+  cat.tools.map((tool) => ({ ...tool, category: cat.category }))
+);
 
 export default function Stack() {
   const [activeTool, setActiveTool] = useState<StackTool | null>(null);
@@ -28,66 +32,60 @@ export default function Stack() {
 
       <div className="min-w-0 flex-1 basis-135">
         <Reveal>
-          <p
-            className="m-0 max-w-[42em] text-pretty"
+          <div
+            className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1.5 text-pretty"
+            style={{ fontSize: "clamp(22px, 3.1vw, 33px)", lineHeight: 1.22 }}
             onMouseLeave={() => {
               setActiveTool(null);
               setActiveCategory(null);
             }}
           >
-            {stack.map((cat, ci) => (
-              <span key={cat.category}>
-                {cat.tools.map((tool, ti) => (
-                  <span key={tool.name}>
-                    <button
-                      type="button"
-                      onMouseEnter={() => {
-                        setActiveTool(tool);
-                        setActiveCategory(cat.category);
-                      }}
-                      onFocus={() => {
-                        setActiveTool(tool);
-                        setActiveCategory(cat.category);
-                      }}
-                      className="cursor-pointer border-0 bg-transparent p-0 transition-colors duration-200"
-                      style={{
-                        display: "inline",
-                        fontFamily: "var(--font-geist-sans)",
-                        fontSize: tool.daily ? "clamp(21px, 3vw, 30px)" : "16px",
-                        fontWeight: tool.daily ? 600 : 400,
-                        letterSpacing: "-0.02em",
-                        lineHeight: 1.5,
-                        color:
-                          activeTool?.name === tool.name
-                            ? "var(--accent-2)"
-                            : tool.daily
-                              ? "var(--ink)"
-                              : "var(--ink-3)",
-                      }}
-                    >
-                      {tool.name}
-                    </button>
-                    {ti < cat.tools.length - 1 && (
-                      <span
-                        className="mx-2 text-ink-3"
-                        style={{ fontSize: "14px", fontWeight: 300 }}
-                      >
-                        /
-                      </span>
-                    )}
-                  </span>
-                ))}
-                {ci < stack.length - 1 && (
+            {flatTools.map((tool, i) => (
+              <Fragment key={tool.name}>
+                <button
+                  type="button"
+                  onMouseEnter={() => {
+                    setActiveTool(tool);
+                    setActiveCategory(tool.category);
+                  }}
+                  onFocus={() => {
+                    setActiveTool(tool);
+                    setActiveCategory(tool.category);
+                  }}
+                  className="cursor-pointer border-0 bg-transparent p-0 transition-colors duration-200"
+                  style={{
+                    fontFamily: "var(--font-geist-sans)",
+                    fontSize: tool.daily ? "1em" : "0.5em",
+                    fontWeight: tool.daily ? 500 : 400,
+                    letterSpacing: tool.daily ? "-0.03em" : "-0.012em",
+                    alignSelf: tool.daily ? undefined : "center",
+                    color:
+                      activeTool?.name === tool.name
+                        ? "var(--accent-2)"
+                        : tool.daily
+                          ? "var(--ink)"
+                          : "var(--ink-3)",
+                  }}
+                >
+                  {tool.name}
+                </button>
+                {i < flatTools.length - 1 && (
                   <span
-                    className="mx-2 text-ink-3"
-                    style={{ fontSize: "14px", fontWeight: 300 }}
+                    aria-hidden="true"
+                    className="font-mono-tight"
+                    style={{
+                      fontSize: "0.36em",
+                      color: "var(--ink-3)",
+                      opacity: 0.7,
+                      alignSelf: "center",
+                    }}
                   >
                     /
                   </span>
                 )}
-              </span>
+              </Fragment>
             ))}
-          </p>
+          </div>
         </Reveal>
 
         <div className="mt-6 border-t border-line pt-4">
