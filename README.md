@@ -14,9 +14,9 @@ Personal portfolio built with Next.js (App Router), TypeScript, Tailwind CSS, an
 ## Getting started
 
 ```bash
-pnpm install
+npm install
 cp .env.example .env.local   # fill in Upstash Redis credentials
-pnpm dev
+npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
@@ -45,8 +45,8 @@ lib/                   site content and data fetching helpers
 ## Scripts
 
 ```bash
-pnpm dev      # start dev server
-pnpm build    # production build
-pnpm start    # run production build
-pnpm lint     # eslint
+npm run dev      # start dev server
+npm run build    # production build
+npm start        # run production build
+npm run lint     # eslint
 ```
