@@ -77,34 +77,36 @@ export default function Stack() {
           </p>
         </Reveal>
 
-        <div className="relative mt-6 h-[1.4em] overflow-hidden border-t border-line pt-4">
-          <AnimatePresence mode="wait" initial={false}>
-            {activeTool ? (
-              <motion.p
-                key={activeTool.name}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.16, ease: "easeOut" }}
-                className="absolute m-0 font-mono-tight text-[12.5px] text-ink-2"
-              >
-                <span className="font-medium text-accent-2">{activeCategory}</span>
-                <span className="mx-2 text-ink-3">·</span>
-                {activeTool.note}
-              </motion.p>
-            ) : (
-              <motion.p
-                key="hint"
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.16, ease: "easeOut" }}
-                className="absolute m-0 font-mono-tight text-[12.5px] text-ink-3"
-              >
-                hover a tool for the note behind it
-              </motion.p>
-            )}
-          </AnimatePresence>
+        <div className="mt-6 border-t border-line pt-4">
+          <div className="relative h-5 overflow-hidden">
+            <AnimatePresence mode="wait" initial={false}>
+              {activeTool ? (
+                <motion.p
+                  key={activeTool.name}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.16, ease: "easeOut" }}
+                  className="absolute inset-x-0 top-0 m-0 font-mono-tight text-[12.5px] text-ink-2"
+                >
+                  <span className="font-medium text-accent-2">{activeCategory}</span>
+                  <span className="mx-2 text-ink-3">·</span>
+                  {activeTool.note}
+                </motion.p>
+              ) : (
+                <motion.p
+                  key="hint"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.16, ease: "easeOut" }}
+                  className="absolute inset-x-0 top-0 m-0 font-mono-tight text-[12.5px] text-ink-3"
+                >
+                  hover a tool for the note behind it
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </section>
