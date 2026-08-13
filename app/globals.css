@@ -1,26 +1,99 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #ffffff;
+  --paper-2: oklch(0.968 0 0);
+  --ink: oklch(0.215 0 0);
+  --ink-2: oklch(0.475 0 0);
+  --ink-3: oklch(0.6 0 0);
+  --line: oklch(0.912 0 0);
+  --gh-empty: oklch(0.945 0 0);
+  --accent: #e0642a;
+  --accent-2: var(--accent);
+  --dur: 420ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --sp: clamp(50px, 7.4vw, 84px);
+}
+
+:root[data-theme="dark"] {
+  --paper: oklch(0.162 0 0);
+  --paper-2: oklch(0.205 0 0);
+  --ink: oklch(0.955 0 0);
+  --ink-2: oklch(0.735 0 0);
+  --ink-3: oklch(0.585 0 0);
+  --line: oklch(0.298 0 0);
+  --gh-empty: oklch(0.248 0 0);
+  --accent-2: color-mix(in oklch, var(--accent) 46%, oklch(0.92 0.012 70));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur: 1ms;
+  }
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--paper);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--accent-2);
+  color: var(--paper);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.font-mono-tight {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+@keyframes ping-soft {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+.status-ping {
+  animation: ping-soft 2.6s var(--ease) infinite;
 }
