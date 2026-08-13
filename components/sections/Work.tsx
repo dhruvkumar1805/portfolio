@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { FiPlus, FiMinus } from "react-icons/fi";
 import { work } from "@/lib/site-config";
 import Reveal from "@/components/ui/Reveal";
 
@@ -18,7 +19,7 @@ export default function Work() {
           02
         </span>
         <h2 className="m-0 font-mono-tight text-[11px] font-medium tracking-[0.14em] text-ink-2 uppercase">
-          Work
+          Experience
         </h2>
         <span className="font-mono-tight text-[10px] tracking-[0.06em] text-ink-3 text-pretty">
           click a row to open
@@ -35,26 +36,24 @@ export default function Work() {
                   <button
                     type="button"
                     onClick={() => setOpen(isOpen ? null : i)}
-                    className="flex w-full flex-wrap items-baseline justify-between gap-x-4.5 gap-y-2 py-6 text-left"
+                    className="flex w-full flex-wrap items-center justify-between gap-x-4.5 gap-y-1.5 py-7 text-left"
                     aria-expanded={isOpen}
                   >
-                    <span className="flex min-w-0 flex-1 basis-70 flex-col gap-1.5">
-                      <span className="font-mono-tight text-[9.5px] font-medium tracking-[0.13em] text-ink-3 uppercase">
-                        {entry.period}
-                      </span>
+                    <span className="flex min-w-0 flex-wrap items-baseline gap-x-3 gap-y-1">
                       <span className="text-xl font-medium tracking-[-0.02em] text-ink">
                         {entry.role}
                       </span>
-                      <span className="font-mono-tight text-[12.5px] text-ink-2">
-                        {entry.org}
-                      </span>
+                      <span className="text-[15px] text-ink-2">{entry.org}</span>
                     </span>
-                    <span
-                      aria-hidden="true"
-                      className="flex h-6.5 w-6.5 shrink-0 items-center justify-center rounded-full border border-line font-mono-tight text-[15px] text-ink-3 transition-transform duration-[var(--dur)]"
-                      style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}
-                    >
-                      +
+                    <span className="flex shrink-0 items-center gap-3">
+                      <span className="font-mono-tight text-[13px] whitespace-nowrap text-ink-3">
+                        {entry.period}
+                      </span>
+                      {isOpen ? (
+                        <FiMinus size={14} aria-hidden="true" className="shrink-0 text-ink-3" />
+                      ) : (
+                        <FiPlus size={14} aria-hidden="true" className="shrink-0 text-ink-3" />
+                      )}
                     </span>
                   </button>
                   <AnimatePresence initial={false}>
@@ -75,15 +74,13 @@ export default function Work() {
                               {point}
                             </p>
                           ))}
-                          <span className="flex flex-wrap gap-1.5">
-                            {entry.stack.map((tech, ti) => (
-                              <span key={tech} className="flex items-center gap-1.5">
-                                {ti > 0 && (
-                                  <span className="font-mono-tight text-[11px] text-ink-3">·</span>
-                                )}
-                                <span className="font-mono-tight text-[11px] text-ink-3">
-                                  {tech}
-                                </span>
+                          <span className="flex flex-wrap gap-2">
+                            {entry.stack.map((tech) => (
+                              <span
+                                key={tech}
+                                className="rounded-md bg-paper-2 px-2.5 py-1 font-mono-tight text-[12px] text-ink-2"
+                              >
+                                {tech}
                               </span>
                             ))}
                           </span>
