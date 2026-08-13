@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { HiOutlineArrowDown } from "react-icons/hi2";
 import { siteConfig } from "@/lib/site-config";
@@ -37,10 +36,8 @@ export default function Hero() {
         </span>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+      <Reveal
+        y={16}
         className="mt-[clamp(26px,4vw,42px)] flex flex-col gap-px overflow-hidden rounded-[5px] border border-line bg-line"
       >
         <div className="flex flex-wrap items-stretch">
@@ -115,9 +112,9 @@ export default function Hero() {
             </span>
           </span>
         </div>
-      </motion.div>
+      </Reveal>
 
-      <Reveal delay={0.15} className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-0 border-t border-b border-line">
+      <Reveal delay={0.1} className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-0 border-t border-b border-line">
         {socials.map((s) => (
           <a
             key={s.label}
