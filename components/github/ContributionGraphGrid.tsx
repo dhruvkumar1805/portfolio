@@ -87,7 +87,7 @@ export default function ContributionGraphGrid({
       <div className="relative">
         <HorizontalScroll
           scrollToSelector="[data-today]"
-          className="overflow-x-auto px-4 pt-3 no-scrollbar"
+          className="overflow-x-auto pt-5 no-scrollbar"
         >
           <div className="flex gap-1.5">
             <div className="flex flex-col gap-1 pt-[18px] font-mono-tight text-[10px] text-ink-3">
@@ -191,7 +191,7 @@ export default function ContributionGraphGrid({
       </div>
 
       {lastShipped && (
-        <div className="flex min-w-0 items-center gap-1 px-4 pt-4 font-mono-tight text-[11px] text-ink-3">
+        <div className="flex min-w-0 items-center gap-1 pt-4 font-mono-tight text-[11px] text-ink-3">
           <span className="shrink-0">last shipped:</span>{" "}
           <a
             href={lastShipped.url}
@@ -228,7 +228,7 @@ export default function ContributionGraphGrid({
           document.body
         )}
 
-      <div className="mt-3 flex items-center justify-between gap-3 border-t border-line px-4 py-3.5 font-mono-tight text-[11.5px] text-ink-3">
+      <div className="mt-4 flex items-center justify-between gap-3 border-t border-line pt-4 font-mono-tight text-[11.5px] text-ink-3">
         <div className="relative flex h-[1.4em] min-w-0 flex-1 items-center overflow-hidden">
           <AnimatePresence mode="wait" initial={false}>
             {hovered ? (

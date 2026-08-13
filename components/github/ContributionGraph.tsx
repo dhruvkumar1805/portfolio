@@ -102,7 +102,7 @@ export default async function ContributionGraph() {
     latestActivity = activity;
   } catch {
     return (
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-line bg-paper-2 px-4 py-3.5 font-mono-tight text-[12.5px] text-ink">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-b border-line py-6 font-mono-tight text-[12.5px] text-ink">
         <span className="inline-flex items-center gap-2.5">
           <FaGithub size={16} className="text-accent-2" />
           contribution data unavailable right now
@@ -128,10 +128,10 @@ export default async function ContributionGraph() {
   const { current: currentStreak, longest: longestStreak } = computeStreaks(streakDays, today);
 
   return (
-    <Reveal className="mt-4 overflow-hidden rounded-xl border border-line bg-paper-2">
-      <div className="flex items-center justify-between gap-2.5 border-b border-line px-4 py-3">
-        <span className="inline-flex items-center gap-2.5 font-mono-tight text-[12.5px] font-semibold text-ink">
-          <FaGithub size={16} className="text-accent-2" />
+    <Reveal className="border-t border-b border-line py-6">
+      <div className="flex items-center justify-between gap-2.5">
+        <span className="inline-flex items-center gap-2.5 font-mono-tight text-[9.5px] font-medium tracking-[0.13em] text-ink-3 uppercase">
+          <FaGithub size={14} className="text-ink-3" />
           shipping log
         </span>
         <ShippedBadge shipped={codedToday} count={todayCount} />
