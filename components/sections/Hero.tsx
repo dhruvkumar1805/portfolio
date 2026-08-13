@@ -26,13 +26,6 @@ export default function Hero() {
         </span>
         <span className="flex items-center gap-4.5 normal-case">
           <VisitorCounter />
-          <span className="flex items-center gap-2 text-ink-2">
-            <span className="relative inline-flex h-1.5 w-1.5 shrink-0">
-              <span className="status-ping absolute inset-0 rounded-full bg-accent-2" />
-              <span className="relative h-1.5 w-1.5 rounded-full bg-accent-2" />
-            </span>
-            Open to work
-          </span>
         </span>
       </div>
 
