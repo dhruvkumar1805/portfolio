@@ -79,11 +79,8 @@ export default function ContributionGraphGrid({
 }) {
   const [hovered, setHovered] = useState<ContributionDay | null>(null);
   const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null);
-  const [mounted, setMounted] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const displayTotal = useCountUp(total, Boolean(prefersReducedMotion));
-
-  useEffect(() => setMounted(true), []);
 
   return (
     <>
@@ -211,7 +208,6 @@ export default function ContributionGraphGrid({
 
       {hovered &&
         tooltipPos &&
-        mounted &&
         createPortal(
           <div
             className="fixed z-50 pointer-events-none rounded-md border px-2.5 py-1.5 font-mono-tight text-[10.5px] whitespace-nowrap"

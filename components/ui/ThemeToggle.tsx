@@ -1,19 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiSun, FiMoon } from "react-icons/fi";
+import { useTheme } from "@/lib/use-theme";
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark" | null>(null);
-
-  useEffect(() => {
-    setTheme(
-      document.documentElement.getAttribute("data-theme") === "dark"
-        ? "dark"
-        : "light"
-    );
-  }, []);
+  const { theme, toggle } = useTheme();
 
   useEffect(() => {
     function onKeydown(e: KeyboardEvent) {
@@ -29,18 +22,7 @@ export default function ThemeToggle() {
     }
     window.addEventListener("keydown", onKeydown);
     return () => window.removeEventListener("keydown", onKeydown);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme]);
-
-  function toggle() {
-    const next =
-      document.documentElement.getAttribute("data-theme") === "dark"
-        ? "light"
-        : "dark";
-    document.documentElement.setAttribute("data-theme", next);
-    window.localStorage.setItem("theme", next);
-    setTheme(next);
-  }
+  }, [toggle]);
 
   return (
     <button
