@@ -99,3 +99,46 @@ body {
 .status-ping {
   animation: ping-soft 2.6s var(--ease) infinite;
 }
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+  animation: theme-old-out 760ms cubic-bezier(0.35, 0, 0.15, 1) both;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+  animation: theme-new-in 760ms cubic-bezier(0.35, 0, 0.15, 1) both;
+}
+
+@keyframes theme-new-in {
+  from {
+    transform: translateY(-101%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes theme-old-out {
+  from {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  to {
+    transform: scale(0.984);
+    filter: brightness(0.9);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
