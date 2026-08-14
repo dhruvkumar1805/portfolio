@@ -84,21 +84,21 @@ export default function ContributionGraphGrid({
 
   return (
     <>
-      <div className="relative">
-        <HorizontalScroll
-          scrollToSelector="[data-today]"
-          className="overflow-x-auto pt-5 no-scrollbar"
-        >
-          <div className="flex gap-1.5">
-            <div className="flex flex-col gap-1 pt-[18px] font-mono-tight text-[10px] text-ink-3">
-              {WEEKDAY_LABELS.map((label, i) => (
-                <span key={i} className="h-2.75 leading-[11px]">
-                  {label}
-                </span>
-              ))}
-            </div>
+      <div className="flex gap-1.5">
+        <div className="flex flex-col gap-1 pt-[18px] font-mono-tight text-[10px] text-ink-3">
+          {WEEKDAY_LABELS.map((label, i) => (
+            <span key={i} className="h-2.75 leading-[11px]">
+              {label}
+            </span>
+          ))}
+        </div>
+        <div className="relative min-w-0 flex-1">
+          <HorizontalScroll
+            scrollToSelector="[data-today]"
+            className="overflow-x-auto pt-5 no-scrollbar"
+          >
             <div
-              className="grid flex-1 gap-1"
+              className="grid gap-1 pl-6 pr-8"
               style={{
                 gridTemplateColumns: `repeat(${weeks.length + 1}, minmax(11px, 1fr))`,
                 gridTemplateRows: "14px repeat(7, 11px)",
@@ -178,16 +178,16 @@ export default function ContributionGraphGrid({
                 })
               )}
             </div>
-          </div>
-        </HorizontalScroll>
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-paper to-transparent"
-        />
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-paper to-transparent"
-        />
+          </HorizontalScroll>
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-paper to-transparent"
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-paper to-transparent"
+          />
+        </div>
       </div>
 
       {lastShipped && (
