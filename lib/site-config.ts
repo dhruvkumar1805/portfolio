@@ -201,6 +201,6 @@ export const education = {
   degree: "Bachelor of Computer Applications",
   school: "Chandigarh University",
   location: "Punjab, India",
-  period: "2023 to 2026",
+  period: "2023 — 2026",
   note: "Most of what I ship I learned outside the syllabus: ROM maintainership taught me build systems; a paying cafe taught me deadlines.",
 };

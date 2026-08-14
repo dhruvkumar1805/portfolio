@@ -18,20 +18,22 @@ export default function Education() {
 
       <div className="min-w-0 flex-1 basis-135">
         <Reveal>
-          <div className="flex flex-col gap-2.5 border-t border-b border-line py-6">
-            <span className="font-mono-tight text-[9.5px] font-medium tracking-[0.13em] text-ink-3 uppercase">
+          <div className="flex flex-wrap items-start justify-between gap-x-4.5 gap-y-1.5 border-t border-b border-line py-6">
+            <span className="flex min-w-0 flex-col gap-1.5">
+              <span className="text-xl font-medium tracking-[-0.02em] text-ink">
+                {education.degree}
+              </span>
+              <span className="font-mono-tight text-[12.5px] text-ink-2">
+                {education.school} &middot; {education.location}
+              </span>
+            </span>
+            <span className="shrink-0 font-mono-tight text-[13px] whitespace-nowrap text-ink-3">
               {education.period}
             </span>
-            <span className="text-xl font-medium tracking-[-0.02em] text-ink">
-              {education.degree}
-            </span>
-            <span className="font-mono-tight text-[12.5px] text-ink-2">
-              {education.school}, {education.location}
-            </span>
-            <p className="m-0 mt-1 max-w-[36em] text-[15px] leading-[1.6] text-ink-2 text-pretty">
-              {education.note}
-            </p>
           </div>
+          <p className="m-0 mt-6 max-w-[36em] text-[15px] leading-[1.6] text-ink-2 text-pretty">
+            {education.note}
+          </p>
         </Reveal>
       </div>
     </section>
