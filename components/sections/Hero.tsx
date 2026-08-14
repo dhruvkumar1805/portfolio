@@ -33,7 +33,7 @@ export default function Hero() {
         y={16}
         className="mt-[clamp(26px,4vw,42px)] flex flex-col gap-px overflow-hidden rounded-[5px] border border-line bg-line"
       >
-        <div className="flex flex-wrap items-stretch gap-px">
+        <div className="flex flex-wrap items-stretch gap-px overflow-hidden">
           <div className="flex min-w-0 flex-[6_1_300px] flex-col gap-4 bg-paper px-[clamp(22px,3.2vw,34px)] pt-[clamp(22px,3.2vw,34px)] pb-[clamp(24px,3.4vw,36px)]">
             <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1 font-mono-tight text-[10.5px] font-medium tracking-[0.15em] text-ink-3 uppercase">
               AI / full-stack engineer
