@@ -69,7 +69,7 @@ export default function Nav() {
       <a
         href="#top"
         aria-label="Top"
-        className="flex shrink-0 items-center border-r border-line py-0 pr-2.5 pl-2 font-mono-tight text-[11.5px] tracking-[0.06em] text-ink-2 transition-colors duration-[var(--dur)] hover:text-accent-2"
+        className="flex shrink-0 items-center border-r border-line py-1.5 pr-2.5 pl-2 font-mono-tight text-[11.5px] tracking-[0.06em] text-ink-2 transition-colors duration-[var(--dur)] hover:text-accent-2"
       >
         DK
       </a>
