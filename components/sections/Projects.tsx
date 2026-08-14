@@ -95,7 +95,7 @@ export default function Projects() {
                       <Link href={project.caseStudyHref} className="flex min-w-0 flex-1 basis-85">
                         <ProjectMeta project={project} tinted={tinted} />
                       </Link>
-                      <span className="flex shrink-0 flex-col items-end gap-1.5 whitespace-nowrap">
+                      <span className="flex shrink-0 flex-col items-start gap-1.5 whitespace-nowrap sm:items-end">
                         <Link
                           href={project.caseStudyHref}
                           className="font-mono-tight text-[11px] text-ink-3 transition-colors duration-[var(--dur)] hover:text-accent-2"
