@@ -7,7 +7,7 @@ export default function Education() {
       id="education"
       className="flex flex-wrap items-start gap-x-8 gap-y-4.5 py-(--sp) scroll-mt-23"
     >
-      <div className="sticky top-22 flex w-33 flex-col gap-1.5 pt-0.5">
+      <div className="flex w-33 flex-col gap-1.5 pt-0.5 min-[800px]:sticky min-[800px]:top-22">
         <span className="font-mono-tight text-[10.5px] tracking-[0.16em] text-ink-3 tabular-nums">
           05
         </span>
