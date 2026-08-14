@@ -42,17 +42,17 @@ const MONTH_NAMES = [
 
 const LEVEL_BG = [
   "var(--gh-empty)",
-  "color-mix(in oklch, var(--accent-2) 32%, transparent)",
-  "color-mix(in oklch, var(--accent-2) 56%, transparent)",
-  "color-mix(in oklch, var(--accent-2) 80%, transparent)",
+  "color-mix(in oklch, var(--accent-2) 40%, transparent)",
+  "color-mix(in oklch, var(--accent-2) 65%, transparent)",
+  "color-mix(in oklch, var(--accent-2) 88%, transparent)",
   "var(--accent-2)",
 ];
 const LEVEL_GLOW = [
   "none",
   "none",
-  "none",
-  "0 0 4px color-mix(in oklch, var(--accent-2) 35%, transparent)",
-  "0 0 6px color-mix(in oklch, var(--accent-2) 60%, transparent)",
+  "0 0 3px color-mix(in oklch, var(--accent-2) 25%, transparent)",
+  "0 0 5px color-mix(in oklch, var(--accent-2) 45%, transparent)",
+  "0 0 8px color-mix(in oklch, var(--accent-2) 65%, transparent)",
 ];
 
 function formatDay(dateStr: string) {

@@ -23,7 +23,7 @@
   --ink-2: oklch(0.735 0 0);
   --ink-3: oklch(0.6 0 0);
   --line: oklch(0.298 0 0);
-  --gh-empty: oklch(0.248 0 0);
+  --gh-empty: oklch(0.275 0 0);
   --accent-2: color-mix(in oklch, var(--accent) 46%, oklch(0.92 0.012 70));
   --accent-text: var(--accent-2);
 }
