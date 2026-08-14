@@ -61,14 +61,14 @@ export default function Hero() {
             </span>
           </div>
 
-          <TiltCard className="relative min-h-[clamp(208px,40vw,268px)] flex-[1_1_232px] overflow-hidden bg-paper-2">
+          <TiltCard className="relative aspect-[4/5] flex-[1_1_232px] overflow-hidden bg-paper-2">
             <Image
               src="/images/avatar.jpg"
               alt={siteConfig.name}
               fill
               priority
               sizes="(min-width: 768px) 232px, 100vw"
-              className="object-cover object-[50%_16%]"
+              className="object-cover object-[50%_25%]"
             />
           </TiltCard>
         </div>
