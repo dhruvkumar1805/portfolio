@@ -21,7 +21,7 @@ export default function CopyButton({ value }: { value: string }) {
       type="button"
       onClick={handleCopy}
       aria-label="Copy email address"
-      className="ml-1 inline-flex min-h-6.5 items-center border-b border-line px-0.5 py-1.5 font-mono-tight text-[9.5px] font-medium tracking-[0.13em] text-ink-3 uppercase transition-colors duration-[var(--dur)] hover:border-accent-2 hover:text-ink"
+      className="inline-flex min-h-6.5 items-center border-b border-line px-0.5 py-1.5 font-mono-tight text-[9.5px] font-medium tracking-[0.13em] text-ink-3 uppercase transition-colors duration-[var(--dur)] hover:border-accent-2 hover:text-ink"
     >
       <span className="relative inline-block h-3 overflow-hidden">
         <AnimatePresence mode="wait" initial={false}>
