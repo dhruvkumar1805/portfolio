@@ -74,7 +74,7 @@ export default function Hero() {
         </div>
 
         <div className="grid grid-cols-[repeat(auto-fit,minmax(188px,1fr))] gap-px">
-          <span className="flex min-w-0 flex-col gap-1.5 bg-paper-2 px-[clamp(22px,3.2vw,34px)] py-4">
+          <span className="flex min-w-0 flex-col justify-center gap-1.5 bg-paper-2 px-[clamp(22px,3.2vw,34px)] py-4">
             <span className="font-mono-tight text-[9.5px] font-medium tracking-[0.14em] text-ink-3 uppercase">
               Focus
             </span>
@@ -82,7 +82,7 @@ export default function Hero() {
               Retrieval systems, real-time backends
             </span>
           </span>
-          <span className="flex min-w-0 flex-col gap-1.5 bg-paper-2 px-[clamp(22px,3.2vw,34px)] py-4">
+          <span className="flex min-w-0 flex-col justify-center gap-1.5 bg-paper-2 px-[clamp(22px,3.2vw,34px)] py-4">
             <span className="font-mono-tight text-[9.5px] font-medium tracking-[0.14em] text-ink-3 uppercase">
               Started
             </span>
@@ -90,7 +90,7 @@ export default function Hero() {
               Android ROMs and device trees, 2019
             </span>
           </span>
-          <span className="flex min-w-0 flex-col gap-1.5 bg-paper-2 px-[clamp(22px,3.2vw,34px)] py-4">
+          <span className="flex min-w-0 flex-col justify-center gap-1.5 bg-paper-2 px-[clamp(22px,3.2vw,34px)] py-4">
             <span className="font-mono-tight text-[9.5px] font-medium tracking-[0.14em] text-ink-3 uppercase">
               Mail
             </span>
