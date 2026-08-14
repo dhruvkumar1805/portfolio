@@ -44,7 +44,7 @@ export default function Hero() {
               {siteConfig.name}
             </h1>
             <p className="m-0 max-w-[26em] text-[clamp(17px,1.9vw,19.5px)] leading-[1.5] tracking-[-0.014em] text-ink text-pretty">
-              I take products the whole way:{" "}
+              I build retrieval systems and real-time backends:{" "}
               <span className="text-ink-2">
                 RAG pipelines, real-time ordering systems, row-level-secure
                 backends.
