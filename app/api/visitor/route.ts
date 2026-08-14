@@ -20,10 +20,14 @@ export async function GET() {
 
   let count: number;
 
-  if (!visited) {
-    count = await redis.incr("portfolio:visitors");
-  } else {
-    count = (await redis.get<number>("portfolio:visitors")) ?? 0;
+  try {
+    if (!visited) {
+      count = await redis.incr("portfolio:visitors");
+    } else {
+      count = (await redis.get<number>("portfolio:visitors")) ?? 0;
+    }
+  } catch {
+    return NextResponse.json({ count: null });
   }
 
   const res = NextResponse.json({ count });
