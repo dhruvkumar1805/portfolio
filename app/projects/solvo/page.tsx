@@ -3,10 +3,26 @@ import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
 import Reveal from "@/components/ui/Reveal";
 
+const title = `Solvo, case study - ${siteConfig.name}`;
+const description =
+  "An embeddable AI support widget. One script tag, and a site answers its own visitors from its own docs, with the source attached to every answer.";
+
 export const metadata: Metadata = {
-  title: `Solvo, case study - ${siteConfig.name}`,
-  description:
-    "An embeddable AI support widget. One script tag, and a site answers its own visitors from its own docs, with the source attached to every answer.",
+  title,
+  description,
+  openGraph: {
+    type: "article",
+    title,
+    description,
+    url: `${siteConfig.url}/projects/solvo`,
+    images: ["/images/avatar.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/images/avatar.jpg"],
+  },
 };
 
 const howItWorks = [
