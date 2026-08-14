@@ -31,7 +31,7 @@ export default function VisitorCounter() {
     return null;
   }
 
-  const digits = String(count).padStart(5, "0").split("");
+  const digits = String(count).padStart(3, "0").split("");
 
   return (
     <motion.span
@@ -42,7 +42,7 @@ export default function VisitorCounter() {
       title="visitors"
     >
       <FaEye size={12} className="text-ink-3" aria-hidden="true" />
-      <span className="inline-flex gap-px font-mono-tight text-[10.5px] tabular-nums text-ink-2">
+      <span className="inline-flex gap-px font-mono-tight text-[10.5px] leading-none tabular-nums text-ink-2">
         {digits.map((d, i) => (
           <motion.span
             key={i}
