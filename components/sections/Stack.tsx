@@ -52,6 +52,11 @@ export default function Stack() {
                     setActiveTool(tool);
                     setActiveCategory(tool.category);
                   }}
+                  onClick={() => {
+                    const next = activeTool?.name === tool.name ? null : tool;
+                    setActiveTool(next);
+                    setActiveCategory(next ? tool.category : null);
+                  }}
                   className="cursor-pointer border-0 bg-transparent p-0 transition-colors duration-200"
                   style={{
                     fontFamily: "var(--font-geist-sans)",
