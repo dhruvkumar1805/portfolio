@@ -71,6 +71,21 @@ function computeStreaks(days: ContributionDay[], today: string) {
   return { current, longest };
 }
 
+function levelForCount(count: number, maxCount: number): number {
+  if (count <= 0) return 0;
+  if (maxCount <= 0) return 1;
+  const ratio = count / maxCount;
+  if (ratio > 0.75) return 4;
+  if (ratio > 0.5) return 3;
+  if (ratio > 0.25) return 2;
+  return 1;
+}
+
+function withLocalLevels(days: ContributionDay[]): ContributionDay[] {
+  const maxCount = days.reduce((max, d) => Math.max(max, d.count), 0);
+  return days.map((d) => ({ ...d, level: levelForCount(d.count, maxCount) }));
+}
+
 function timeAgo(dateStr: string) {
   const diffMs = Date.now() - new Date(dateStr).getTime();
   const mins = Math.floor(diffMs / 60000);
@@ -97,7 +112,7 @@ export default async function ContributionGraph() {
       getLatestActivity(siteConfig.githubHandle).catch(() => null),
     ]);
     total = data.total;
-    allDays = data.days;
+    allDays = withLocalLevels(data.days);
     streakDays = [...prevData.days, ...data.days];
     latestActivity = activity;
   } catch {
