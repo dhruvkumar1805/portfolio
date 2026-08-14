@@ -10,6 +10,7 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     function onKeydown(e: KeyboardEvent) {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
       const target = e.target as HTMLElement;
       const typing =
         target.tagName === "INPUT" ||
