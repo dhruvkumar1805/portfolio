@@ -52,7 +52,7 @@ export default function Hero() {
               Sometimes further down than that, a Rust desktop pet that talks
               to Wayland directly.
             </p>
-            <span className="mt-auto flex items-center gap-2.5 pt-2 font-mono-tight text-[10.5px] font-medium tracking-[0.14em] text-ink-2 uppercase">
+            <span className="flex items-center gap-2.5 pt-2 font-mono-tight text-[10.5px] font-medium tracking-[0.14em] text-ink-2 uppercase">
               <span className="relative inline-flex h-1.5 w-1.5 shrink-0">
                 <span className="status-ping absolute inset-0 rounded-full bg-accent-2" />
                 <span className="relative h-1.5 w-1.5 rounded-full bg-accent-2" />
