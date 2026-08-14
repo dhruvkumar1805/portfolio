@@ -36,8 +36,8 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="border-t border-line py-8">
-      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 font-mono-tight text-[11px] text-ink-3">
+    <footer className="border-t border-line py-9">
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2.5 font-mono-tight text-[11px] text-ink-3">
         <span className="flex items-center gap-2">
           {clock && (
             <>
@@ -53,7 +53,14 @@ export default function Footer() {
         </span>
         <span className="flex items-center gap-4">
           <span>&copy; {new Date().getFullYear()} Dhruv Kumar</span>
-          <span className="hidden sm:inline">press T for the lights</span>
+          <span className="hidden items-center gap-1.5 sm:inline-flex">
+            <span className="text-line">&middot;</span>
+            press
+            <kbd className="inline-flex h-4.5 min-w-4.5 items-center justify-center rounded-[3px] border border-line px-1 font-mono-tight text-[9.5px] text-ink-2">
+              T
+            </kbd>
+            for the lights
+          </span>
         </span>
       </div>
     </footer>
