@@ -14,7 +14,7 @@ export default function Contact() {
         </p>
         <a
           href={`mailto:${siteConfig.email}`}
-          className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 font-mono-tight text-[13px] font-medium tracking-[0.02em] text-paper transition-transform duration-[var(--dur)] hover:-translate-y-0.5"
+          className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 font-mono-tight text-[13px] font-medium tracking-[0.02em] text-paper shadow-[0_10px_28px_-10px_rgba(0,0,0,0.3)] transition-transform duration-[var(--dur)] hover:-translate-y-0.5"
         >
           {siteConfig.email}
         </a>
