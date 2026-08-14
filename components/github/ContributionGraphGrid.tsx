@@ -215,12 +215,12 @@ export default function ContributionGraphGrid({
               left: Math.min(Math.max(tooltipPos.x, 70), window.innerWidth - 70),
               top: tooltipPos.y - 44,
               transform: "translateX(-50%)",
-              borderColor: "var(--accent-2)",
-              background: "var(--ink)",
-              color: "var(--paper)",
+              borderColor: "var(--accent)",
+              background: "#181818",
+              color: "#f2f2f2",
             }}
           >
-            <span className="font-bold" style={{ color: "var(--accent-2)" }}>
+            <span className="font-bold" style={{ color: "var(--accent)" }}>
               {hovered.count}
             </span>{" "}
             {hovered.count === 1 ? "contribution" : "contributions"} &middot; {formatDay(hovered.date)}
@@ -240,7 +240,7 @@ export default function ContributionGraphGrid({
                 transition={{ duration: 0.14, ease: "easeOut" }}
                 className="absolute whitespace-nowrap"
               >
-                <span className="font-bold text-accent-2">{hovered.count}</span>{" "}
+                <span className="font-bold text-accent-text">{hovered.count}</span>{" "}
                 contribution{hovered.count === 1 ? "" : "s"}{" "}
                 <span className="text-ink-2">on {formatDay(hovered.date)}</span>
               </motion.span>
@@ -253,7 +253,7 @@ export default function ContributionGraphGrid({
                 transition={{ duration: 0.14, ease: "easeOut" }}
                 className="absolute flex items-center gap-0 whitespace-nowrap"
               >
-                <span className="font-bold text-accent-2">{displayTotal}</span>
+                <span className="font-bold text-accent-text">{displayTotal}</span>
                 <span className="mx-1">this year</span>
                 {currentStreak > 0 && (
                   <>
