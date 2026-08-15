@@ -52,9 +52,12 @@ export default function Hero() {
         <Reveal
           y={16}
           delay={0.12}
-          className="max-w-[740px] text-[clamp(28px,3.6vw,40px)] leading-[1.12] font-semibold tracking-[-0.024em] text-ink text-pretty"
+          className="max-w-[740px] text-[clamp(28px,3.6vw,40px)] leading-[1.15] font-semibold tracking-[-0.024em] text-pretty"
         >
-          I build retrieval systems and real-time backends.
+          <span className="text-ink">
+            I build retrieval systems and real-time backends,
+          </span>{" "}
+          <span className="text-ink-2">sometimes further down than that.</span>
         </Reveal>
 
         <Reveal
@@ -62,28 +65,17 @@ export default function Hero() {
           delay={0.18}
           className="flex flex-col overflow-hidden rounded-xl border border-line bg-paper-2 sm:h-[248px] sm:flex-row"
         >
-          <div className="flex min-w-0 flex-1 flex-col justify-between gap-6 p-[clamp(20px,3vw,28px)]">
-            <p className="text-[clamp(15px,1.6vw,17px)] leading-[1.6] text-ink-2 text-pretty">
-              Sometimes further down than that: RAG pipelines,
-              row-level-secure Postgres, a Rust desktop pet that talks to
-              Wayland directly.
+          <div className="flex min-w-0 flex-1 items-center p-[clamp(20px,3vw,28px)]">
+            <p className="text-[clamp(15px,1.6vw,17px)] leading-[1.6] text-pretty">
+              <span className="text-ink-2">
+                RAG pipelines, row-level-secure Postgres, a Rust desktop
+                pet that talks to Wayland directly.
+              </span>{" "}
+              <span className="text-ink-3">
+                Started with Android ROMs and device trees in 2021, which
+                is still why I like knowing what&rsquo;s underneath.
+              </span>
             </p>
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 font-mono-tight text-[12px] tracking-[-0.01em] text-ink-3">
-              <span>
-                <span className="text-[10px] tracking-[0.14em] uppercase">
-                  Focus{" "}
-                </span>
-                <span className="text-ink-2">
-                  Retrieval systems, real-time backends
-                </span>
-              </span>
-              <span className="before:mr-2 before:text-line before:content-['·']">
-                <span className="text-[10px] tracking-[0.14em] uppercase">
-                  Started{" "}
-                </span>
-                <span className="text-ink-2">2019</span>
-              </span>
-            </div>
           </div>
           <div className="relative aspect-[4/5] w-full shrink-0 border-t border-line sm:h-full sm:w-auto sm:border-t-0 sm:border-l">
             <Image
@@ -103,18 +95,38 @@ export default function Hero() {
         <Reveal
           y={16}
           delay={0.24}
-          className="flex items-baseline gap-2 font-mono-tight text-[12px] tracking-[-0.01em] text-ink-3"
+          className="grid grid-cols-1 gap-x-10 gap-y-5 sm:grid-cols-3"
         >
-          <span className="text-[10px] tracking-[0.14em] uppercase">
-            Mail{" "}
-          </span>
-          <a
-            href={`mailto:${siteConfig.email}`}
-            className="text-ink-2 transition-colors duration-[var(--dur)] hover:text-accent-2"
-          >
-            {siteConfig.email}
-          </a>
-          <CopyButton value={siteConfig.email} />
+          <div className="border-t border-line pt-2.5">
+            <div className="font-mono-tight text-[10px] tracking-[0.14em] text-ink-3 uppercase">
+              Focus
+            </div>
+            <div className="mt-1 text-[13px] tracking-[-0.01em] text-ink-2">
+              Retrieval systems, real-time backends
+            </div>
+          </div>
+          <div className="border-t border-line pt-2.5">
+            <div className="font-mono-tight text-[10px] tracking-[0.14em] text-ink-3 uppercase">
+              Started
+            </div>
+            <div className="mt-1 text-[13px] tracking-[-0.01em] text-ink-2">
+              2019
+            </div>
+          </div>
+          <div className="border-t border-line pt-2.5">
+            <div className="font-mono-tight text-[10px] tracking-[0.14em] text-ink-3 uppercase">
+              Mail
+            </div>
+            <div className="mt-1 flex items-center gap-2 text-[13px] tracking-[-0.01em]">
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="text-ink-2 transition-colors duration-[var(--dur)] hover:text-accent-2"
+              >
+                {siteConfig.email}
+              </a>
+              <CopyButton value={siteConfig.email} />
+            </div>
+          </div>
         </Reveal>
       </div>
 
