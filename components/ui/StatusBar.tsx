@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { FaMusic, FaCode } from "react-icons/fa6";
+import { FaMusic, FaSpotify } from "react-icons/fa6";
+import { VscVscode } from "react-icons/vsc";
 
 type Track = {
   title: string;
@@ -50,6 +51,38 @@ function StatusDot({ live }: { live: boolean }) {
           live ? "bg-accent-2" : "bg-ink-3"
         }`}
       />
+    </span>
+  );
+}
+
+function Equalizer({ reduceMotion }: { reduceMotion: boolean }) {
+  const bars = [
+    { height: [3, 9, 5, 8, 3], duration: 0.9 },
+    { height: [3, 6, 10, 4, 3], duration: 1.05 },
+    { height: [3, 8, 4, 9, 3], duration: 0.8 },
+  ];
+  return (
+    <span className="flex h-2.5 items-end gap-[2px]" aria-hidden="true">
+      {bars.map((bar, i) =>
+        reduceMotion ? (
+          <span
+            key={i}
+            className="w-[2px] rounded-full bg-accent-2"
+            style={{ height: bar.height[1] }}
+          />
+        ) : (
+          <motion.span
+            key={i}
+            className="w-[2px] rounded-full bg-accent-2"
+            animate={{ height: bar.height }}
+            transition={{
+              duration: bar.duration,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ),
+      )}
     </span>
   );
 }
@@ -142,8 +175,8 @@ export default function StatusBar() {
 
   const codingLabel = coding
     ? coding.isActive
-      ? `Coding · ${coding.language}`
-      : `Last coded ${relativeTime(coding.lastActiveAt)}`
+      ? (coding.language ?? "")
+      : relativeTime(coding.lastActiveAt)
     : "";
 
   const codingDetail = coding
@@ -172,17 +205,25 @@ export default function StatusBar() {
           rel="noreferrer"
           className={`group min-w-0 ${pillClass}`}
         >
-          <StatusDot live={status?.music?.isPlaying ?? false} />
-          {track.albumArt ? (
-            <img
-              src={track.albumArt}
-              alt=""
-              className="h-5 w-5 shrink-0 rounded-[4px] border border-line/60 object-cover grayscale contrast-125"
-            />
-          ) : (
-            <FaMusic size={11} className="shrink-0 text-ink-3" aria-hidden="true" />
-          )}
-          <span className="flex min-w-0 max-w-[180px] flex-col justify-center leading-[1.15]">
+          <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-line/60 bg-paper-2">
+            {track.albumArt ? (
+              <img
+                src={track.albumArt}
+                alt=""
+                className="h-full w-full object-cover grayscale contrast-125"
+              />
+            ) : (
+              <span className="flex h-full w-full items-center justify-center">
+                <FaMusic size={13} className="text-ink-3" aria-hidden="true" />
+              </span>
+            )}
+          </span>
+          <span className="flex min-w-0 max-w-[180px] flex-col justify-center gap-0.5 leading-[1.15]">
+            <span className="flex items-center gap-1.5 font-mono-tight text-[9.5px] font-medium tracking-[0.1em] text-ink-3 uppercase">
+              <StatusDot live={status?.music?.isPlaying ?? false} />
+              {status?.music?.isPlaying ? "Now playing" : "Last played"}
+              {status?.music?.isPlaying && <Equalizer reduceMotion={reduceMotion} />}
+            </span>
             <Crossfade
               text={track.title}
               reduceMotion={reduceMotion}
@@ -194,13 +235,23 @@ export default function StatusBar() {
               className="truncate font-mono-tight text-[10.5px] tracking-[-0.01em] text-ink-3"
             />
           </span>
+          <FaSpotify
+            size={15}
+            className="ml-auto shrink-0 self-center text-ink-3 transition-colors duration-[var(--dur)] group-hover:text-accent-2"
+            aria-hidden="true"
+          />
         </a>
       )}
       {hasCoding && coding && (
         <span className={pillClass}>
-          <StatusDot live={coding.isActive} />
-          <FaCode size={11} className="shrink-0 text-ink-3" aria-hidden="true" />
-          <span className="flex min-w-0 flex-col justify-center leading-[1.15]">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-line/60 bg-paper-2">
+            <VscVscode size={17} className="text-ink-3" aria-hidden="true" />
+          </span>
+          <span className="flex min-w-0 flex-col justify-center gap-0.5 leading-[1.15]">
+            <span className="flex items-center gap-1.5 font-mono-tight text-[9.5px] font-medium tracking-[0.1em] text-ink-3 uppercase">
+              <StatusDot live={coding.isActive} />
+              {coding.isActive ? "Coding now" : "Last coded"}
+            </span>
             <Crossfade
               text={codingLabel}
               reduceMotion={reduceMotion}
