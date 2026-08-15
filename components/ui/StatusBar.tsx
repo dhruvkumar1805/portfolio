@@ -26,7 +26,7 @@ type Status = {
   coding: Coding | null;
 };
 
-const POLL_INTERVAL = 30000;
+const POLL_INTERVAL = 15000;
 
 function relativeTime(seconds: number): string {
   const diff = Date.now() / 1000 - seconds;
@@ -56,6 +56,7 @@ export default function StatusBar() {
 
   useEffect(() => {
     let cancelled = false;
+    let interval: ReturnType<typeof setInterval> | null = null;
 
     function poll() {
       fetch("/api/status")
@@ -68,11 +69,34 @@ export default function StatusBar() {
         });
     }
 
-    poll();
-    const interval = setInterval(poll, POLL_INTERVAL);
+    function startPolling() {
+      poll();
+      if (interval) clearInterval(interval);
+      interval = setInterval(poll, POLL_INTERVAL);
+    }
+
+    function stopPolling() {
+      if (interval) {
+        clearInterval(interval);
+        interval = null;
+      }
+    }
+
+    function onVisibilityChange() {
+      if (document.hidden) {
+        stopPolling();
+      } else {
+        startPolling();
+      }
+    }
+
+    if (!document.hidden) startPolling();
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
     return () => {
       cancelled = true;
-      clearInterval(interval);
+      stopPolling();
+      document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, []);
 
