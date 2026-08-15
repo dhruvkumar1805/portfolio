@@ -155,21 +155,22 @@ export default function StatusBar() {
         .join(" · ") || undefined
     : undefined;
 
+  const pillClass =
+    "flex items-center gap-2.5 rounded-full border border-line bg-paper/78 px-3.5 py-2 shadow-[0_6px_24px_-14px_rgba(0,0,0,0.24)] backdrop-blur-xl transition-colors duration-[var(--dur)] hover:bg-paper-2/70";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16, x: "-50%" }}
       animate={{ opacity: 1, y: 0, x: "-50%" }}
       transition={{ duration: 0.76, ease: [0.2, 0.7, 0.2, 1] }}
-      className="fixed bottom-[calc(1.125rem+env(safe-area-inset-bottom))] left-1/2 z-40 flex max-w-[calc(100vw-24px)] items-center gap-0.5 overflow-hidden rounded-full border border-line bg-paper/78 p-1.5 shadow-[0_6px_24px_-14px_rgba(0,0,0,0.24)] backdrop-blur-xl"
+      className="fixed bottom-[calc(1.125rem+env(safe-area-inset-bottom))] left-1/2 z-40 flex w-fit max-w-[calc(100vw-24px)] flex-col gap-2"
     >
       {hasMusic && track && (
         <a
           href={track.url}
           target="_blank"
           rel="noreferrer"
-          className={`group flex min-w-0 shrink items-center gap-2 rounded-full px-3 py-1.5 transition-colors duration-[var(--dur)] hover:bg-paper-2/70 ${
-            hasCoding ? "border-r border-line pr-3" : ""
-          }`}
+          className={`group min-w-0 ${pillClass}`}
         >
           <StatusDot live={status?.music?.isPlaying ?? false} />
           {track.albumArt ? (
@@ -181,7 +182,7 @@ export default function StatusBar() {
           ) : (
             <FaMusic size={11} className="shrink-0 text-ink-3" aria-hidden="true" />
           )}
-          <span className="flex min-w-0 max-w-[160px] flex-col justify-center leading-[1.15]">
+          <span className="flex min-w-0 max-w-[180px] flex-col justify-center leading-[1.15]">
             <Crossfade
               text={track.title}
               reduceMotion={reduceMotion}
@@ -196,10 +197,7 @@ export default function StatusBar() {
         </a>
       )}
       {hasCoding && coding && (
-        <span
-          className="flex shrink-0 cursor-help items-center gap-2 rounded-full px-3 py-1.5 transition-colors duration-[var(--dur)] hover:bg-paper-2/70"
-          title={codingTooltip}
-        >
+        <span className={`cursor-help ${pillClass}`} title={codingTooltip}>
           <StatusDot live={coding.isActive} />
           <FaCode size={11} className="shrink-0 text-ink-3" aria-hidden="true" />
           <Crossfade
