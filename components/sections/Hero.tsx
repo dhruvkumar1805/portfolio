@@ -52,7 +52,7 @@ export default function Hero() {
         <Reveal
           y={16}
           delay={0.12}
-          className="max-w-[740px] text-[clamp(28px,3.6vw,40px)] leading-[1.15] font-semibold tracking-[-0.024em] text-pretty"
+          className="max-w-[740px] text-[clamp(23px,7vw,40px)] leading-[1.18] font-semibold tracking-[-0.02em] text-pretty"
         >
           <span className="text-ink">
             I build retrieval systems and real-time backends,
@@ -77,7 +77,7 @@ export default function Hero() {
               </span>
             </p>
           </div>
-          <div className="relative aspect-[4/5] w-full shrink-0 border-t border-line sm:h-full sm:w-auto sm:border-t-0 sm:border-l">
+          <div className="relative h-[190px] w-full shrink-0 border-t border-line sm:h-full sm:w-auto sm:aspect-[4/5] sm:border-t-0 sm:border-l">
             <Image
               src="/images/avatar.jpg"
               alt={siteConfig.name}
@@ -86,9 +86,6 @@ export default function Hero() {
               sizes="(min-width: 640px) 34vw, 100vw"
               className="object-cover object-[50%_20%]"
             />
-            <span className="absolute bottom-2.5 left-2.5 rounded-md border border-line/70 bg-paper/85 px-2 py-1 font-mono-tight text-[9.5px] tracking-[0.04em] text-ink-3 backdrop-blur-sm">
-              avatar.jpg
-            </span>
           </div>
         </Reveal>
 
