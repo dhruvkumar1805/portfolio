@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { FaMusic, FaCode } from "react-icons/fa6";
 
 type Track = {
@@ -54,8 +54,37 @@ function StatusDot({ live }: { live: boolean }) {
   );
 }
 
+function Crossfade({
+  text,
+  className,
+  reduceMotion,
+}: {
+  text: string;
+  className: string;
+  reduceMotion: boolean;
+}) {
+  if (reduceMotion) {
+    return <span className={className}>{text}</span>;
+  }
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.span
+        key={text}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.32, ease: [0.2, 0.7, 0.2, 1] }}
+        className={className}
+      >
+        {text}
+      </motion.span>
+    </AnimatePresence>
+  );
+}
+
 export default function StatusBar() {
   const [status, setStatus] = useState<Status | null>(null);
+  const reduceMotion = Boolean(useReducedMotion());
 
   useEffect(() => {
     let cancelled = false;
@@ -110,6 +139,21 @@ export default function StatusBar() {
 
   if (!hasMusic && !hasCoding) return null;
 
+  const codingLabel = coding
+    ? coding.isActive
+      ? `Coding · ${coding.language}`
+      : `Last coded ${relativeTime(coding.lastActiveAt)}`
+    : "";
+
+  const codingTooltip = coding
+    ? [
+        coding.totalToday ? `${coding.totalToday} today` : null,
+        coding.streak >= 2 ? `${coding.streak} day streak` : null,
+      ]
+        .filter(Boolean)
+        .join(" · ") || undefined
+    : undefined;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16, x: "-50%" }}
@@ -122,7 +166,7 @@ export default function StatusBar() {
           href={track.url}
           target="_blank"
           rel="noreferrer"
-          className={`flex min-w-0 shrink items-center gap-2 rounded-full px-3 py-1 text-[13px] transition-colors duration-[var(--dur)] hover:text-accent-2 ${
+          className={`group flex min-w-0 shrink items-center gap-2 rounded-full px-3 py-1.5 transition-colors duration-[var(--dur)] hover:bg-paper-2/70 ${
             hasCoding ? "border-r border-line pr-3" : ""
           }`}
         >
@@ -131,29 +175,39 @@ export default function StatusBar() {
             <img
               src={track.albumArt}
               alt=""
-              className="h-4 w-4 shrink-0 rounded-[3px] object-cover grayscale contrast-125"
+              className="h-5 w-5 shrink-0 rounded-[4px] border border-line/60 object-cover grayscale contrast-125"
             />
           ) : (
-            <FaMusic size={10} className="shrink-0 text-ink-3" aria-hidden="true" />
+            <FaMusic size={11} className="shrink-0 text-ink-3" aria-hidden="true" />
           )}
-          <span className="min-w-0 truncate font-mono-tight text-[12.5px] tracking-[-0.01em] text-ink-2">
-            {track.title} · {track.artist}
+          <span className="flex min-w-0 max-w-[160px] flex-col justify-center leading-[1.15]">
+            <Crossfade
+              text={track.title}
+              reduceMotion={reduceMotion}
+              className="truncate font-mono-tight text-[12.5px] tracking-[-0.01em] text-ink-2 group-hover:text-accent-2"
+            />
+            <Crossfade
+              text={track.artist}
+              reduceMotion={reduceMotion}
+              className="truncate font-mono-tight text-[10.5px] tracking-[-0.01em] text-ink-3"
+            />
           </span>
         </a>
       )}
       {hasCoding && coding && (
         <span
-          className="flex shrink-0 items-center gap-2 rounded-full px-3 py-1 text-[13px]"
-          title={coding.totalToday ? `${coding.totalToday} today` : undefined}
+          className="flex shrink-0 cursor-help items-center gap-2 rounded-full px-3 py-1.5 transition-colors duration-[var(--dur)] hover:bg-paper-2/70"
+          title={codingTooltip}
         >
           <StatusDot live={coding.isActive} />
-          <FaCode size={10} className="shrink-0 text-ink-3" aria-hidden="true" />
-          <span className="font-mono-tight text-[12.5px] tracking-[-0.01em] text-ink-2">
-            {coding.isActive
-              ? `Coding · ${coding.language}`
-              : `Last coded ${relativeTime(coding.lastActiveAt)}`}
-            {coding.streak >= 2 ? ` · ${coding.streak}d streak` : ""}
-          </span>
+          <FaCode size={11} className="shrink-0 text-ink-3" aria-hidden="true" />
+          <Crossfade
+            text={codingLabel}
+            reduceMotion={reduceMotion}
+            className={`font-mono-tight text-[12.5px] tracking-[-0.01em] ${
+              coding.isActive ? "text-ink-2" : "text-ink-3"
+            }`}
+          />
         </span>
       )}
     </motion.div>
