@@ -115,7 +115,7 @@ export default function StatusBar() {
       initial={{ opacity: 0, y: 16, x: "-50%" }}
       animate={{ opacity: 1, y: 0, x: "-50%" }}
       transition={{ duration: 0.76, ease: [0.2, 0.7, 0.2, 1] }}
-      className="fixed bottom-4.5 left-1/2 z-40 flex max-w-[calc(100vw-24px)] items-center gap-0.5 overflow-hidden rounded-full border border-line bg-paper/78 p-1.5 shadow-[0_6px_24px_-14px_rgba(0,0,0,0.24)] backdrop-blur-xl"
+      className="fixed bottom-[calc(1.125rem+env(safe-area-inset-bottom))] left-1/2 z-40 flex max-w-[calc(100vw-24px)] items-center gap-0.5 overflow-hidden rounded-full border border-line bg-paper/78 p-1.5 shadow-[0_6px_24px_-14px_rgba(0,0,0,0.24)] backdrop-blur-xl"
     >
       {hasMusic && track && (
         <a
