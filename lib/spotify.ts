@@ -2,10 +2,15 @@ type SpotifyArtist = {
   name: string;
 };
 
+type SpotifyImage = {
+  url: string;
+};
+
 type SpotifyItem = {
   name: string;
   artists: SpotifyArtist[];
   external_urls?: { spotify?: string };
+  album?: { images?: SpotifyImage[] };
 };
 
 type TokenResponse = {
@@ -26,6 +31,7 @@ export type SpotifyTrack = {
   title: string;
   artist: string;
   url: string;
+  albumArt: string | null;
 };
 
 export type NowPlaying = {
@@ -76,10 +82,12 @@ async function getAccessToken(): Promise<string | null> {
 }
 
 function toTrack(item: SpotifyItem): SpotifyTrack {
+  const images = item.album?.images ?? [];
   return {
     title: item.name,
     artist: item.artists.map((a) => a.name).join(", "),
     url: item.external_urls?.spotify ?? "",
+    albumArt: images[images.length - 1]?.url ?? null,
   };
 }
 

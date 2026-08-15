@@ -8,6 +8,7 @@ type Track = {
   title: string;
   artist: string;
   url: string;
+  albumArt: string | null;
 };
 
 type Music = {
@@ -126,7 +127,15 @@ export default function StatusBar() {
           }`}
         >
           <StatusDot live={status?.music?.isPlaying ?? false} />
-          <FaMusic size={10} className="shrink-0 text-ink-3" aria-hidden="true" />
+          {track.albumArt ? (
+            <img
+              src={track.albumArt}
+              alt=""
+              className="h-4 w-4 shrink-0 rounded-[3px] object-cover grayscale contrast-125"
+            />
+          ) : (
+            <FaMusic size={10} className="shrink-0 text-ink-3" aria-hidden="true" />
+          )}
           <span className="min-w-0 truncate font-mono-tight text-[12.5px] tracking-[-0.01em] text-ink-2">
             {track.title} · {track.artist}
           </span>
