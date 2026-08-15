@@ -156,7 +156,7 @@ export default function StatusBar() {
     : undefined;
 
   const pillClass =
-    "flex items-center gap-2.5 rounded-full border border-line bg-paper/78 px-3.5 py-2 shadow-[0_6px_24px_-14px_rgba(0,0,0,0.24)] backdrop-blur-xl transition-colors duration-[var(--dur)] hover:bg-paper-2/70";
+    "flex items-center gap-2.5 rounded-full border border-line bg-paper/78 px-3.5 py-2 backdrop-blur-xl transition-colors duration-[var(--dur)] hover:bg-paper-2/70";
 
   return (
     <motion.div
