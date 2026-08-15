@@ -60,16 +60,32 @@ export default function Hero() {
         <Reveal
           y={16}
           delay={0.18}
-          className="flex flex-col overflow-hidden rounded-xl border border-line bg-paper-2 sm:flex-row sm:items-stretch"
+          className="flex flex-col overflow-hidden rounded-xl border border-line bg-paper-2 sm:h-[248px] sm:flex-row"
         >
-          <div className="flex min-w-0 flex-1 items-center">
-            <p className="p-[clamp(20px,3vw,32px)] text-[clamp(15px,1.6vw,17px)] leading-[1.6] text-ink-2 text-pretty">
+          <div className="flex min-w-0 flex-1 flex-col justify-between gap-6 p-[clamp(20px,3vw,28px)]">
+            <p className="text-[clamp(15px,1.6vw,17px)] leading-[1.6] text-ink-2 text-pretty">
               Sometimes further down than that: RAG pipelines,
               row-level-secure Postgres, a Rust desktop pet that talks to
               Wayland directly.
             </p>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 font-mono-tight text-[12px] tracking-[-0.01em] text-ink-3">
+              <span>
+                <span className="text-[10px] tracking-[0.14em] uppercase">
+                  Focus{" "}
+                </span>
+                <span className="text-ink-2">
+                  Retrieval systems, real-time backends
+                </span>
+              </span>
+              <span className="before:mr-2 before:text-line before:content-['·']">
+                <span className="text-[10px] tracking-[0.14em] uppercase">
+                  Started{" "}
+                </span>
+                <span className="text-ink-2">2019</span>
+              </span>
+            </div>
           </div>
-          <div className="relative aspect-[4/5] w-full shrink-0 sm:aspect-auto sm:w-[34%] sm:max-w-[300px]">
+          <div className="relative aspect-[4/5] w-full shrink-0 border-t border-line sm:h-full sm:w-auto sm:border-t-0 sm:border-l">
             <Image
               src="/images/avatar.jpg"
               alt={siteConfig.name}
@@ -87,34 +103,18 @@ export default function Hero() {
         <Reveal
           y={16}
           delay={0.24}
-          className="flex flex-col gap-1.5 font-mono-tight text-[12px] tracking-[-0.01em] text-ink-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-2"
+          className="flex items-baseline gap-2 font-mono-tight text-[12px] tracking-[-0.01em] text-ink-3"
         >
-          <span>
-            <span className="text-[10px] tracking-[0.14em] uppercase">
-              Focus{" "}
-            </span>
-            <span className="text-ink-2">
-              Retrieval systems, real-time backends
-            </span>
+          <span className="text-[10px] tracking-[0.14em] uppercase">
+            Mail{" "}
           </span>
-          <span className="sm:before:mr-2 sm:before:text-line sm:before:content-['·']">
-            <span className="text-[10px] tracking-[0.14em] uppercase">
-              Started{" "}
-            </span>
-            <span className="text-ink-2">2019</span>
-          </span>
-          <span className="flex items-baseline gap-2 sm:before:mr-1 sm:before:text-line sm:before:content-['·']">
-            <span className="text-[10px] tracking-[0.14em] uppercase">
-              Mail{" "}
-            </span>
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="text-ink-2 transition-colors duration-[var(--dur)] hover:text-accent-2"
-            >
-              {siteConfig.email}
-            </a>
-            <CopyButton value={siteConfig.email} />
-          </span>
+          <a
+            href={`mailto:${siteConfig.email}`}
+            className="text-ink-2 transition-colors duration-[var(--dur)] hover:text-accent-2"
+          >
+            {siteConfig.email}
+          </a>
+          <CopyButton value={siteConfig.email} />
         </Reveal>
       </div>
 
