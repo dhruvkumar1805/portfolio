@@ -189,7 +189,7 @@ export default function StatusBar() {
     : undefined;
 
   const pillClass =
-    "flex items-center gap-2.5 rounded-full border border-line bg-paper/78 px-3.5 py-2 backdrop-blur-xl transition-colors duration-[var(--dur)] hover:bg-paper-2/70";
+    "flex items-center gap-2.5 rounded-full border border-line bg-paper/78 px-3.5 py-2 backdrop-blur-xl transition-[background-color,transform] duration-[var(--dur)] hover:-translate-y-0.5 hover:bg-paper-2/70";
 
   return (
     <motion.div
@@ -205,7 +205,11 @@ export default function StatusBar() {
           rel="noreferrer"
           className={`group min-w-0 ${pillClass}`}
         >
-          <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-line/60 bg-paper-2">
+          <span
+            className={`relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border bg-paper-2 transition-colors duration-[var(--dur)] ${
+              status?.music?.isPlaying ? "border-accent-2/50" : "border-line/60"
+            }`}
+          >
             {track.albumArt ? (
               <img
                 src={track.albumArt}
@@ -219,7 +223,11 @@ export default function StatusBar() {
             )}
           </span>
           <span className="flex min-w-0 max-w-[180px] flex-col justify-center gap-0.5 leading-[1.15]">
-            <span className="flex items-center gap-1.5 font-mono-tight text-[9.5px] font-medium tracking-[0.1em] text-ink-3 uppercase">
+            <span
+              className={`flex items-center gap-1.5 font-mono-tight text-[9.5px] font-medium tracking-[0.1em] uppercase ${
+                status?.music?.isPlaying ? "text-accent-2" : "text-ink-3"
+              }`}
+            >
               <StatusDot live={status?.music?.isPlaying ?? false} />
               {status?.music?.isPlaying ? "Now playing" : "Last played"}
               {status?.music?.isPlaying && <Equalizer reduceMotion={reduceMotion} />}
@@ -227,7 +235,7 @@ export default function StatusBar() {
             <Crossfade
               text={track.title}
               reduceMotion={reduceMotion}
-              className="truncate font-mono-tight text-[12.5px] tracking-[-0.01em] text-ink-2 group-hover:text-accent-2"
+              className="truncate font-mono-tight text-[12.5px] font-medium tracking-[-0.01em] text-ink-2 group-hover:text-accent-2"
             />
             <Crossfade
               text={track.artist}
@@ -244,18 +252,26 @@ export default function StatusBar() {
       )}
       {hasCoding && coding && (
         <span className={pillClass}>
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-line/60 bg-paper-2">
+          <span
+            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border bg-paper-2 transition-colors duration-[var(--dur)] ${
+              coding.isActive ? "border-accent-2/50" : "border-line/60"
+            }`}
+          >
             <VscVscode size={17} className="text-ink-3" aria-hidden="true" />
           </span>
           <span className="flex min-w-0 flex-col justify-center gap-0.5 leading-[1.15]">
-            <span className="flex items-center gap-1.5 font-mono-tight text-[9.5px] font-medium tracking-[0.1em] text-ink-3 uppercase">
+            <span
+              className={`flex items-center gap-1.5 font-mono-tight text-[9.5px] font-medium tracking-[0.1em] uppercase ${
+                coding.isActive ? "text-accent-2" : "text-ink-3"
+              }`}
+            >
               <StatusDot live={coding.isActive} />
               {coding.isActive ? "Coding now" : "Last coded"}
             </span>
             <Crossfade
               text={codingLabel}
               reduceMotion={reduceMotion}
-              className={`truncate font-mono-tight text-[12.5px] tracking-[-0.01em] ${
+              className={`truncate font-mono-tight text-[12.5px] font-medium tracking-[-0.01em] ${
                 coding.isActive ? "text-ink-2" : "text-ink-3"
               }`}
             />
