@@ -146,7 +146,7 @@ export default function StatusBar() {
       : `Last coded ${relativeTime(coding.lastActiveAt)}`
     : "";
 
-  const codingTooltip = coding
+  const codingDetail = coding
     ? [
         coding.totalToday ? `${coding.totalToday} today` : null,
         coding.streak >= 2 ? `${coding.streak} day streak` : null,
@@ -197,16 +197,25 @@ export default function StatusBar() {
         </a>
       )}
       {hasCoding && coding && (
-        <span className={`cursor-help ${pillClass}`} title={codingTooltip}>
+        <span className={pillClass}>
           <StatusDot live={coding.isActive} />
           <FaCode size={11} className="shrink-0 text-ink-3" aria-hidden="true" />
-          <Crossfade
-            text={codingLabel}
-            reduceMotion={reduceMotion}
-            className={`font-mono-tight text-[12.5px] tracking-[-0.01em] ${
-              coding.isActive ? "text-ink-2" : "text-ink-3"
-            }`}
-          />
+          <span className="flex min-w-0 flex-col justify-center leading-[1.15]">
+            <Crossfade
+              text={codingLabel}
+              reduceMotion={reduceMotion}
+              className={`truncate font-mono-tight text-[12.5px] tracking-[-0.01em] ${
+                coding.isActive ? "text-ink-2" : "text-ink-3"
+              }`}
+            />
+            {codingDetail && (
+              <Crossfade
+                text={codingDetail}
+                reduceMotion={reduceMotion}
+                className="truncate font-mono-tight text-[10.5px] tracking-[-0.01em] text-ink-3"
+              />
+            )}
+          </span>
         </span>
       )}
     </motion.div>
