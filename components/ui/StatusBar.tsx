@@ -117,7 +117,13 @@ function Crossfade({
 
 export default function StatusBar() {
   const [status, setStatus] = useState<Status | null>(null);
+  const [stackOpen, setStackOpen] = useState(false);
+  const [canHover, setCanHover] = useState(false);
   const reduceMotion = Boolean(useReducedMotion());
+
+  useEffect(() => {
+    setCanHover(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -191,19 +197,48 @@ export default function StatusBar() {
   const pillClass =
     "flex items-center gap-2.5 rounded-full border border-line bg-paper/78 px-3.5 py-2 backdrop-blur-xl transition-[background-color,transform] duration-[var(--dur)] hover:-translate-y-0.5 hover:bg-paper-2/70";
 
+  const shouldStack = hasMusic && hasCoding;
+  const musicLive = status?.music?.isPlaying ?? false;
+  const codingLive = coding?.isActive ?? false;
+  const musicIsFront = musicLive || !codingLive;
+  const expanded = !shouldStack || !canHover || stackOpen;
+
+  const stackTransition =
+    "transition-[transform,opacity,margin-top] duration-[var(--dur)] ease-[cubic-bezier(0.2,0.7,0.2,1)]";
+
+  const musicStackClass = !shouldStack
+    ? ""
+    : musicIsFront
+      ? `relative z-10 ${expanded ? "mt-2" : "-mt-11"} ${stackTransition}`
+      : `relative z-0 ${expanded ? "scale-100 opacity-100" : "scale-[0.94] opacity-80"} ${stackTransition}`;
+
+  const codingStackClass = !shouldStack
+    ? ""
+    : musicIsFront
+      ? `relative z-0 ${expanded ? "scale-100 opacity-100" : "scale-[0.94] opacity-80"} ${stackTransition}`
+      : `relative z-10 ${expanded ? "mt-2" : "-mt-11"} ${stackTransition}`;
+
+  const musicOrder = shouldStack ? (musicIsFront ? 2 : 1) : undefined;
+  const codingOrder = shouldStack ? (musicIsFront ? 1 : 2) : undefined;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16, x: "-50%" }}
       animate={{ opacity: 1, y: 0, x: "-50%" }}
       transition={{ duration: 0.76, ease: [0.2, 0.7, 0.2, 1] }}
-      className="fixed bottom-[calc(1.125rem+env(safe-area-inset-bottom))] left-1/2 z-40 flex w-fit max-w-[calc(100vw-24px)] flex-col gap-2"
+      onMouseEnter={() => canHover && setStackOpen(true)}
+      onMouseLeave={() => canHover && setStackOpen(false)}
+      onFocus={() => setStackOpen(true)}
+      onBlur={() => setStackOpen(false)}
+      className="fixed bottom-[calc(1.125rem+env(safe-area-inset-bottom))] left-1/2 z-40 flex w-fit max-w-[calc(100vw-24px)] flex-col"
     >
       {hasMusic && track && (
         <a
           href={track.url}
           target="_blank"
           rel="noreferrer"
-          className={`group min-w-0 ${pillClass}`}
+          style={{ order: musicOrder }}
+          className={`group min-w-0 ${pillClass} ${musicStackClass}`}
         >
           <span
             className={`relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border bg-paper-2 transition-colors duration-[var(--dur)] ${
@@ -251,7 +286,7 @@ export default function StatusBar() {
         </a>
       )}
       {hasCoding && coding && (
-        <span className={pillClass}>
+        <span style={{ order: codingOrder }} className={`${pillClass} ${codingStackClass}`}>
           <span
             className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border bg-paper-2 transition-colors duration-[var(--dur)] ${
               coding.isActive ? "border-accent-2/50" : "border-line/60"
