@@ -30,7 +30,7 @@ export default function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label="Toggle dark mode"
-      className="relative z-[1] flex shrink-0 items-center justify-center border-l border-line py-2 pr-2 pl-3 text-ink-2 transition-colors duration-[var(--dur)] hover:text-accent-2"
+      className="sticky right-0 z-[1] flex shrink-0 items-center justify-center border-l border-line bg-paper py-2 pr-2 pl-3 text-ink-2 transition-colors duration-[var(--dur)] hover:text-accent-2"
     >
       <span className="relative block h-[15px] w-[15px]">
         <AnimatePresence initial={false} mode="wait">
