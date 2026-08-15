@@ -101,8 +101,7 @@ export default function StatusBar() {
         });
     }
 
-    function startPolling() {
-      poll();
+    function startInterval() {
       if (interval) clearInterval(interval);
       interval = setInterval(poll, POLL_INTERVAL);
     }
@@ -118,11 +117,13 @@ export default function StatusBar() {
       if (document.hidden) {
         stopPolling();
       } else {
-        startPolling();
+        poll();
+        startInterval();
       }
     }
 
-    if (!document.hidden) startPolling();
+    poll();
+    if (!document.hidden) startInterval();
     document.addEventListener("visibilitychange", onVisibilityChange);
 
     return () => {
