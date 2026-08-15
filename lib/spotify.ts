@@ -45,7 +45,10 @@ const CURRENTLY_PLAYING_URL =
 const RECENTLY_PLAYED_URL =
   "https://api.spotify.com/v1/me/player/recently-played?limit=1";
 
+const STATUS_CACHE_TTL_MS = 8000;
+
 let cachedToken: { value: string; expiresAt: number } | null = null;
+let cachedStatus: { value: NowPlaying | null; expiresAt: number } | null = null;
 
 async function getAccessToken(): Promise<string | null> {
   if (cachedToken && cachedToken.expiresAt > Date.now()) {
@@ -92,6 +95,16 @@ function toTrack(item: SpotifyItem): SpotifyTrack {
 }
 
 export async function getNowPlaying(): Promise<NowPlaying | null> {
+  if (cachedStatus && cachedStatus.expiresAt > Date.now()) {
+    return cachedStatus.value;
+  }
+
+  const value = await fetchNowPlaying();
+  cachedStatus = { value, expiresAt: Date.now() + STATUS_CACHE_TTL_MS };
+  return value;
+}
+
+async function fetchNowPlaying(): Promise<NowPlaying | null> {
   const token = await getAccessToken();
   if (!token) return null;
 
