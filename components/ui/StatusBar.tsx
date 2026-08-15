@@ -19,6 +19,7 @@ type Coding = {
   language: string | null;
   isActive: boolean;
   lastActiveAt: number;
+  totalToday: string | null;
 };
 
 type Status = {
@@ -131,7 +132,10 @@ export default function StatusBar() {
         </a>
       )}
       {hasCoding && coding && (
-        <span className="flex shrink-0 items-center gap-2 rounded-full px-3 py-1 text-[13px]">
+        <span
+          className="flex shrink-0 items-center gap-2 rounded-full px-3 py-1 text-[13px]"
+          title={coding.totalToday ? `${coding.totalToday} today` : undefined}
+        >
           <StatusDot live={coding.isActive} />
           <FaCode size={10} className="shrink-0 text-ink-3" aria-hidden="true" />
           <span className="font-mono-tight text-[12.5px] tracking-[-0.01em] text-ink-2">
