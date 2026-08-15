@@ -30,7 +30,7 @@ type Status = {
   coding: Coding | null;
 };
 
-const POLL_INTERVAL = 15000;
+const POLL_INTERVAL = 5000;
 
 function relativeTime(seconds: number): string {
   const diff = Date.now() / 1000 - seconds;
