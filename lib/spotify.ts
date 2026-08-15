@@ -10,6 +10,7 @@ type SpotifyItem = {
 
 type TokenResponse = {
   access_token?: string;
+  expires_in?: number;
 };
 
 type CurrentlyPlayingResponse = {
@@ -38,7 +39,13 @@ const CURRENTLY_PLAYING_URL =
 const RECENTLY_PLAYED_URL =
   "https://api.spotify.com/v1/me/player/recently-played?limit=1";
 
+let cachedToken: { value: string; expiresAt: number } | null = null;
+
 async function getAccessToken(): Promise<string | null> {
+  if (cachedToken && cachedToken.expiresAt > Date.now()) {
+    return cachedToken.value;
+  }
+
   const clientId = process.env.SPOTIFY_CLIENT_ID;
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
   const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
@@ -59,7 +66,13 @@ async function getAccessToken(): Promise<string | null> {
 
   if (!res.ok) return null;
   const data: TokenResponse = await res.json();
-  return data.access_token ?? null;
+  if (!data.access_token) return null;
+
+  cachedToken = {
+    value: data.access_token,
+    expiresAt: Date.now() + ((data.expires_in ?? 3600) - 60) * 1000,
+  };
+  return cachedToken.value;
 }
 
 function toTrack(item: SpotifyItem): SpotifyTrack {
