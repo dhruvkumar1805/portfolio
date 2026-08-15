@@ -33,6 +33,7 @@ export type CodingStatus = {
 const ACTIVE_WINDOW_SECONDS = 5 * 60;
 const CACHE_TTL_MS = 20000;
 const STREAK_RANGE_DAYS = 30;
+const TIMEZONE = "Asia/Kolkata";
 
 let cached: { value: CodingStatus | null; expiresAt: number } | null = null;
 
@@ -40,8 +41,10 @@ function authHeader(apiKey: string): string {
   return `Basic ${Buffer.from(`${apiKey}:`).toString("base64")}`;
 }
 
+const dateFormatter = new Intl.DateTimeFormat("en-CA", { timeZone: TIMEZONE });
+
 function toDateString(date: Date): string {
-  return date.toISOString().slice(0, 10);
+  return dateFormatter.format(date);
 }
 
 function computeStreak(days: SummaryDay[]): number {
@@ -74,8 +77,9 @@ async function fetchCodingStatus(): Promise<CodingStatus | null> {
 
   const auth = authHeader(apiKey);
   const today = new Date();
-  const rangeStart = new Date(today);
-  rangeStart.setDate(rangeStart.getDate() - (STREAK_RANGE_DAYS - 1));
+  const rangeStart = new Date(
+    today.getTime() - (STREAK_RANGE_DAYS - 1) * 24 * 60 * 60 * 1000
+  );
   const date = toDateString(today);
 
   const [heartbeatsRes, statusBarRes, summariesRes] = await Promise.all([
