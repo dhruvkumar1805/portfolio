@@ -14,8 +14,11 @@ export type CodingStatus = {
 };
 
 const ACTIVE_WINDOW_SECONDS = 5 * 60;
+const CACHE_TTL_MS = 20000;
 
-export async function getCodingStatus(): Promise<CodingStatus | null> {
+let cached: { value: CodingStatus | null; expiresAt: number } | null = null;
+
+async function fetchCodingStatus(): Promise<CodingStatus | null> {
   const apiKey = process.env.WAKATIME_API_KEY;
   if (!apiKey) return null;
 
@@ -42,4 +45,14 @@ export async function getCodingStatus(): Promise<CodingStatus | null> {
     isActive: nowSeconds - last.time <= ACTIVE_WINDOW_SECONDS,
     lastActiveAt: last.time,
   };
+}
+
+export async function getCodingStatus(): Promise<CodingStatus | null> {
+  if (cached && cached.expiresAt > Date.now()) {
+    return cached.value;
+  }
+
+  const value = await fetchCodingStatus();
+  cached = { value, expiresAt: Date.now() + CACHE_TTL_MS };
+  return value;
 }
