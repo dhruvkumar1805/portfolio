@@ -233,10 +233,7 @@ export default function StatusBar() {
       className="fixed bottom-[calc(1.125rem+env(safe-area-inset-bottom))] left-1/2 z-40 flex w-fit max-w-[calc(100vw-24px)] flex-col"
     >
       {hasMusic && track && (
-        <a
-          href={track.url}
-          target="_blank"
-          rel="noreferrer"
+        <span
           style={{ order: musicOrder }}
           className={`group min-w-0 ${pillClass} ${musicStackClass}`}
         >
@@ -267,23 +264,27 @@ export default function StatusBar() {
               {status?.music?.isPlaying ? "Now playing" : "Last played"}
               {status?.music?.isPlaying && <Equalizer reduceMotion={reduceMotion} />}
             </span>
-            <Crossfade
-              text={track.title}
-              reduceMotion={reduceMotion}
-              className="truncate font-mono-tight text-[12.5px] font-medium tracking-[-0.01em] text-ink-2 group-hover:text-accent-2"
-            />
+            <a href={track.url} target="_blank" rel="noreferrer" className="contents">
+              <Crossfade
+                text={track.title}
+                reduceMotion={reduceMotion}
+                className="truncate font-mono-tight text-[12.5px] font-medium tracking-[-0.01em] text-ink-2 hover:text-accent-2"
+              />
+            </a>
             <Crossfade
               text={track.artist}
               reduceMotion={reduceMotion}
               className="truncate font-mono-tight text-[10.5px] tracking-[-0.01em] text-ink-3"
             />
           </span>
-          <FaSpotify
-            size={15}
-            className="ml-auto shrink-0 self-center text-ink-3 transition-colors duration-[var(--dur)] group-hover:text-accent-2"
-            aria-hidden="true"
-          />
-        </a>
+          <a href={track.url} target="_blank" rel="noreferrer" className="contents">
+            <FaSpotify
+              size={15}
+              className="ml-auto shrink-0 self-center text-ink-3 transition-colors duration-[var(--dur)] hover:text-accent-2"
+              aria-hidden="true"
+            />
+          </a>
+        </span>
       )}
       {hasCoding && coding && (
         <span style={{ order: codingOrder }} className={`${pillClass} ${codingStackClass}`}>
