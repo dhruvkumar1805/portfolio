@@ -4,6 +4,7 @@ import { siteConfig } from "@/lib/site-config";
 import ThemeScript from "@/components/ui/ThemeScript";
 import Nav from "@/components/nav/Nav";
 import ScrollProgress from "@/components/ui/ScrollProgress";
+import StatusBar from "@/components/ui/StatusBar";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
@@ -53,6 +54,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ScrollProgress />
         <Nav />
+        <StatusBar />
         <div className="relative mx-auto max-w-[1010px] px-[clamp(20px,5vw,34px)]">
           {children}
           <Footer />
