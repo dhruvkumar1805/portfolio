@@ -53,20 +53,15 @@ function computeStreak(days: SummaryDay[]): number {
   );
 
   let streak = 0;
-  let started = false;
-  for (const day of sorted) {
-    const active = day.grand_total.total_seconds > 0;
-    if (!started) {
-      if (!active) continue;
-      started = true;
-      streak = 1;
-      continue;
-    }
+  for (let i = 0; i < sorted.length; i++) {
+    const active = sorted[i].grand_total.total_seconds > 0;
     if (active) {
       streak += 1;
-    } else {
-      break;
+      continue;
     }
+    // Forgive only the most recent day (today may still be in progress).
+    if (i === 0) continue;
+    break;
   }
   return streak;
 }
