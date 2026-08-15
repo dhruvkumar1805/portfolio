@@ -20,6 +20,7 @@ type Coding = {
   isActive: boolean;
   lastActiveAt: number;
   totalToday: string | null;
+  streak: number;
 };
 
 type Status = {
@@ -142,6 +143,7 @@ export default function StatusBar() {
             {coding.isActive
               ? `Coding · ${coding.language}`
               : `Last coded ${relativeTime(coding.lastActiveAt)}`}
+            {coding.streak >= 2 ? ` · ${coding.streak}d streak` : ""}
           </span>
         </span>
       )}
