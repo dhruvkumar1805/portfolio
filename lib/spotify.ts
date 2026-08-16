@@ -45,10 +45,12 @@ const CURRENTLY_PLAYING_URL =
 const RECENTLY_PLAYED_URL =
   "https://api.spotify.com/v1/me/player/recently-played?limit=1";
 
-const STATUS_CACHE_TTL_MS = 20000;
+const PLAYING_CACHE_TTL_MS = 4000;
+const RECENT_CACHE_TTL_MS = 60000;
 
 let cachedToken: { value: string; expiresAt: number } | null = null;
-let cachedStatus: { value: NowPlaying | null; expiresAt: number } | null = null;
+let cachedPlaying: { value: NowPlaying | null; expiresAt: number } | null = null;
+let cachedRecent: { value: NowPlaying | null; expiresAt: number } | null = null;
 let lastGoodStatus: NowPlaying | null = null;
 let rateLimitedUntil = 0;
 
@@ -97,54 +99,78 @@ function toTrack(item: SpotifyItem): SpotifyTrack {
 }
 
 export async function getNowPlaying(): Promise<NowPlaying | null> {
-  if (cachedStatus && cachedStatus.expiresAt > Date.now()) {
-    return cachedStatus.value;
-  }
-
   if (rateLimitedUntil > Date.now()) {
     return lastGoodStatus;
   }
 
-  const fetched = await fetchNowPlaying();
-  const value = fetched ?? lastGoodStatus;
-  if (fetched) lastGoodStatus = fetched;
-
-  cachedStatus = { value, expiresAt: Date.now() + STATUS_CACHE_TTL_MS };
-  return value;
-}
-
-async function fetchNowPlaying(): Promise<NowPlaying | null> {
   const token = await getAccessToken();
-  if (!token) return null;
+  if (!token) return lastGoodStatus;
 
-  const playingRes = await fetch(CURRENTLY_PLAYING_URL, {
-    headers: { Authorization: `Bearer ${token}` },
-    cache: "no-store",
-  });
-
-  if (playingRes.status === 200) {
-    const data: CurrentlyPlayingResponse = await playingRes.json();
-    if (data.is_playing && data.item) {
-      return { isPlaying: true, track: toTrack(data.item) };
+  let active: NowPlaying | null | "error";
+  if (cachedPlaying && cachedPlaying.expiresAt > Date.now()) {
+    active = cachedPlaying.value;
+  } else {
+    active = await fetchActivePlayback(token);
+    if (active !== "error") {
+      cachedPlaying = { value: active, expiresAt: Date.now() + PLAYING_CACHE_TTL_MS };
     }
   }
 
-  const recentRes = await fetch(RECENTLY_PLAYED_URL, {
+  if (active === "error") return lastGoodStatus;
+  if (active) {
+    lastGoodStatus = active;
+    return active;
+  }
+
+  if (cachedRecent && cachedRecent.expiresAt > Date.now()) {
+    return cachedRecent.value;
+  }
+
+  const recent = await fetchLastPlayed(token);
+  if (recent === "error") return lastGoodStatus;
+
+  cachedRecent = { value: recent, expiresAt: Date.now() + RECENT_CACHE_TTL_MS };
+  lastGoodStatus = recent;
+  return recent;
+}
+
+function applyRateLimitBackoff(res: Response) {
+  const retryAfterSec = Number(res.headers.get("retry-after"));
+  rateLimitedUntil = Date.now() + (Number.isFinite(retryAfterSec) ? retryAfterSec * 1000 : 60000);
+}
+
+async function fetchActivePlayback(token: string): Promise<NowPlaying | null | "error"> {
+  const res = await fetch(CURRENTLY_PLAYING_URL, {
     headers: { Authorization: `Bearer ${token}` },
     cache: "no-store",
   });
 
-  if (!recentRes.ok) {
-    if (recentRes.status === 429) {
-      const retryAfterSec = Number(recentRes.headers.get("retry-after"));
-      rateLimitedUntil = Date.now() + (Number.isFinite(retryAfterSec) ? retryAfterSec * 1000 : 60000);
+  if (res.status === 200) {
+    const data: CurrentlyPlayingResponse = await res.json();
+    if (data.is_playing && data.item) {
+      return { isPlaying: true, track: toTrack(data.item) };
     }
     return null;
   }
 
-  const recentData: RecentlyPlayedResponse = await recentRes.json();
-  const item = recentData.items?.[0]?.track;
-  if (!item) return { isPlaying: false, track: null };
+  if (res.status === 204) return null;
 
-  return { isPlaying: false, track: toTrack(item) };
+  if (res.status === 429) applyRateLimitBackoff(res);
+  return "error";
+}
+
+async function fetchLastPlayed(token: string): Promise<NowPlaying | "error"> {
+  const res = await fetch(RECENTLY_PLAYED_URL, {
+    headers: { Authorization: `Bearer ${token}` },
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    if (res.status === 429) applyRateLimitBackoff(res);
+    return "error";
+  }
+
+  const data: RecentlyPlayedResponse = await res.json();
+  const item = data.items?.[0]?.track;
+  return { isPlaying: false, track: item ? toTrack(item) : null };
 }
