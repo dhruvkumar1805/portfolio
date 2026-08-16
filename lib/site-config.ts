@@ -64,17 +64,19 @@ export const projects: Project[] = [
     stack: ["Server-Sent Events", "Razorpay", "Prisma", "Firebase Auth"],
     href: "https://bunnyscafe.in",
     hrefLabel: "bunnyscafe.in",
+    caseStudyHref: "/projects/bunnys-cafe",
   },
   {
     slug: "nekopet",
     index: "03",
     title: "nekopet",
-    tag: "Open source · no toolkit",
+    tag: "Open source · solo build",
     description:
       "A desktop pet for Wayland, in Rust. Speaks wlr-layer-shell directly, reads raw keys from /dev/input, renders sprites through shared-memory buffers. Its eyes follow the cursor.",
-    stack: ["Rust", "Wayland", "smithay"],
+    stack: ["Rust", "Wayland", "smithay-client-toolkit"],
     href: "https://github.com/dhruvkumar1805/nekopet",
     hrefLabel: "github",
+    caseStudyHref: "/projects/nekopet",
   },
   {
     slug: "cipheros",
@@ -88,6 +90,7 @@ export const projects: Project[] = [
     stack: ["AOSP", "Linux Kernel", "msm8953", "Jenkins"],
     href: "https://cipheros.org.in/",
     hrefLabel: "cipheros.org.in",
+    caseStudyHref: "/projects/cipheros",
   },
 ];
 
