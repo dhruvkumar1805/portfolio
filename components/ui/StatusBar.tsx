@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { FaMusic, FaSpotify } from "react-icons/fa6";
 import { VscVscode } from "react-icons/vsc";
@@ -253,10 +254,12 @@ export default function StatusBar() {
             }`}
           >
             {track.albumArt ? (
-              <img
+              <Image
                 src={track.albumArt}
                 alt=""
-                className="h-full w-full object-cover grayscale contrast-125"
+                fill
+                sizes="40px"
+                className="object-cover grayscale contrast-125"
               />
             ) : (
               <span className="flex h-full w-full items-center justify-center">
