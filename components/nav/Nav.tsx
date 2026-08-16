@@ -79,7 +79,7 @@ export default function Nav() {
           </a>
           <span
             aria-hidden="true"
-            className="pointer-events-none w-5 shrink-0 bg-gradient-to-r from-paper to-transparent"
+            className="pointer-events-none absolute top-0 bottom-0 left-full w-5 bg-gradient-to-r from-paper to-transparent"
           />
         </div>
         {navLinks.map((link) => (

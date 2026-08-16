@@ -29,7 +29,7 @@ export default function ThemeToggle() {
     <div className="sticky right-0 z-[1] flex shrink-0 items-stretch">
       <span
         aria-hidden="true"
-        className="pointer-events-none w-5 shrink-0 bg-gradient-to-l from-paper to-transparent"
+        className="pointer-events-none absolute top-0 right-full bottom-0 w-5 bg-gradient-to-l from-paper to-transparent"
       />
       <button
         type="button"
