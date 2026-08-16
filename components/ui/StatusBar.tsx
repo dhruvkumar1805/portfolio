@@ -212,7 +212,7 @@ export default function StatusBar() {
   const musicLive = status?.music?.isPlaying ?? false;
   const codingLive = coding?.isActive ?? false;
   const musicIsFront = musicLive || !codingLive;
-  const expanded = !shouldStack || !canHover || stackOpen;
+  const expanded = !shouldStack || stackOpen;
 
   const stackTransition =
     "transition-[transform,opacity,margin-top] duration-[var(--dur)] ease-[cubic-bezier(0.2,0.7,0.2,1)]";
@@ -241,6 +241,7 @@ export default function StatusBar() {
       onMouseLeave={() => canHover && setStackOpen(false)}
       onFocus={() => setStackOpen(true)}
       onBlur={() => setStackOpen(false)}
+      onClick={() => !canHover && shouldStack && setStackOpen((open) => !open)}
       className="fixed bottom-[calc(1.125rem+env(safe-area-inset-bottom))] left-1/2 z-40 flex w-fit max-w-[calc(100vw-24px)] flex-col"
     >
       {hasMusic && track && (

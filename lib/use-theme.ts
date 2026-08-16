@@ -62,12 +62,17 @@ export function useTheme() {
 
     playToggleBlip(next === "dark");
 
-    if (!reducedMotion && document.startViewTransition) {
+    if (!reducedMotion && !document.hidden && document.startViewTransition) {
       transitionInFlight = true;
-      const transition = document.startViewTransition(() => setTheme(next));
-      transition.finished.finally(() => {
+      try {
+        const transition = document.startViewTransition(() => setTheme(next));
+        transition.finished.catch(() => {}).finally(() => {
+          transitionInFlight = false;
+        });
+      } catch {
         transitionInFlight = false;
-      });
+        setTheme(next);
+      }
     } else {
       setTheme(next);
     }
