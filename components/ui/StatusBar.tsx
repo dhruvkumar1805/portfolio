@@ -31,6 +31,7 @@ type Status = {
 };
 
 const POLL_INTERVAL = 5000;
+const STATUS_CACHE_KEY = "statusbar:lastStatus";
 
 function relativeTime(seconds: number): string {
   const diff = Date.now() / 1000 - seconds;
@@ -126,18 +127,27 @@ export default function StatusBar() {
   }, []);
 
   useEffect(() => {
+    try {
+      const cached = localStorage.getItem(STATUS_CACHE_KEY);
+      if (cached) setStatus(JSON.parse(cached));
+    } catch {}
+  }, []);
+
+  useEffect(() => {
     let cancelled = false;
     let interval: ReturnType<typeof setInterval> | null = null;
 
     function poll() {
       fetch("/api/status")
-        .then((r) => (r.ok ? r.json() : null))
-        .then((d) => {
-          if (!cancelled) setStatus(d);
+        .then((r) => (r.ok ? r.json() : undefined))
+        .then((d: Status | undefined) => {
+          if (cancelled || d === undefined) return;
+          setStatus(d);
+          try {
+            localStorage.setItem(STATUS_CACHE_KEY, JSON.stringify(d));
+          } catch {}
         })
-        .catch(() => {
-          if (!cancelled) setStatus(null);
-        });
+        .catch(() => {});
     }
 
     function startInterval() {
