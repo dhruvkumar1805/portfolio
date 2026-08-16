@@ -45,10 +45,12 @@ const CURRENTLY_PLAYING_URL =
 const RECENTLY_PLAYED_URL =
   "https://api.spotify.com/v1/me/player/recently-played?limit=1";
 
-const STATUS_CACHE_TTL_MS = 8000;
+const STATUS_CACHE_TTL_MS = 20000;
 
 let cachedToken: { value: string; expiresAt: number } | null = null;
 let cachedStatus: { value: NowPlaying | null; expiresAt: number } | null = null;
+let lastGoodStatus: NowPlaying | null = null;
+let rateLimitedUntil = 0;
 
 async function getAccessToken(): Promise<string | null> {
   if (cachedToken && cachedToken.expiresAt > Date.now()) {
@@ -99,7 +101,14 @@ export async function getNowPlaying(): Promise<NowPlaying | null> {
     return cachedStatus.value;
   }
 
-  const value = await fetchNowPlaying();
+  if (rateLimitedUntil > Date.now()) {
+    return lastGoodStatus;
+  }
+
+  const fetched = await fetchNowPlaying();
+  const value = fetched ?? lastGoodStatus;
+  if (fetched) lastGoodStatus = fetched;
+
   cachedStatus = { value, expiresAt: Date.now() + STATUS_CACHE_TTL_MS };
   return value;
 }
@@ -125,7 +134,13 @@ async function fetchNowPlaying(): Promise<NowPlaying | null> {
     cache: "no-store",
   });
 
-  if (!recentRes.ok) return { isPlaying: false, track: null };
+  if (!recentRes.ok) {
+    if (recentRes.status === 429) {
+      const retryAfterSec = Number(recentRes.headers.get("retry-after"));
+      rateLimitedUntil = Date.now() + (Number.isFinite(retryAfterSec) ? retryAfterSec * 1000 : 60000);
+    }
+    return null;
+  }
 
   const recentData: RecentlyPlayedResponse = await recentRes.json();
   const item = recentData.items?.[0]?.track;
