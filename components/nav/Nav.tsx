@@ -62,39 +62,51 @@ export default function Nav() {
       initial={{ opacity: 0, y: -16, x: "-50%" }}
       animate={{ opacity: 1, y: 0, x: "-50%" }}
       transition={{ duration: 0.76, ease: [0.2, 0.7, 0.2, 1] }}
-      className="fixed top-4.5 left-1/2 z-40 flex max-w-[calc(100vw-24px)] items-center gap-0.5 overflow-x-auto rounded-full border border-line bg-paper/78 p-1.5 shadow-[0_6px_24px_-14px_rgba(0,0,0,0.24)] backdrop-blur-xl no-scrollbar"
-      ref={navRef}
-      onMouseLeave={() => setHovered(null)}
+      className="fixed top-4.5 left-1/2 z-40 max-w-[calc(100vw-24px)] overflow-hidden rounded-full border border-line bg-paper/78 shadow-[0_6px_24px_-14px_rgba(0,0,0,0.24)] backdrop-blur-xl"
     >
-      <a
-        href="#top"
-        aria-label="Top"
-        className="flex shrink-0 items-center border-r border-line py-1.5 pr-2.5 pl-2 font-mono-tight text-[11.5px] tracking-[0.06em] text-ink-2 transition-colors duration-[var(--dur)] hover:text-accent-2"
+      <div
+        className="flex items-center gap-0.5 overflow-x-auto p-1.5 no-scrollbar"
+        ref={navRef}
+        onMouseLeave={() => setHovered(null)}
       >
-        DK
-      </a>
-      {navLinks.map((link) => (
         <a
-          key={link.id}
-          ref={(el) => {
-            linkRefs.current[link.id] = el;
-          }}
-          href={link.href}
-          onMouseEnter={() => setHovered(link.id)}
-          className="relative shrink-0 rounded-full px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] transition-colors duration-300"
-          style={{ color: pillId === link.id ? "var(--paper)" : "var(--ink-2)" }}
+          href="#top"
+          aria-label="Top"
+          className="flex shrink-0 items-center border-r border-line py-1.5 pr-2.5 pl-2 font-mono-tight text-[11.5px] tracking-[0.06em] text-ink-2 transition-colors duration-[var(--dur)] hover:text-accent-2"
         >
-          {pillId === link.id && (
-            <motion.span
-              layoutId="nav-pill"
-              className="absolute inset-0 -z-[1] rounded-full bg-ink"
-              transition={{ type: "spring", stiffness: 500, damping: 38 }}
-            />
-          )}
-          {link.label}
+          DK
         </a>
-      ))}
-      <ThemeToggle />
+        {navLinks.map((link) => (
+          <a
+            key={link.id}
+            ref={(el) => {
+              linkRefs.current[link.id] = el;
+            }}
+            href={link.href}
+            onMouseEnter={() => setHovered(link.id)}
+            className="relative shrink-0 rounded-full px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] transition-colors duration-300"
+            style={{ color: pillId === link.id ? "var(--paper)" : "var(--ink-2)" }}
+          >
+            {pillId === link.id && (
+              <motion.span
+                layoutId="nav-pill"
+                className="absolute inset-0 -z-[1] rounded-full bg-ink"
+                transition={{ type: "spring", stiffness: 500, damping: 38 }}
+              />
+            )}
+            {link.label}
+          </a>
+        ))}
+        <ThemeToggle />
+      </div>
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 left-0 w-5 bg-gradient-to-r from-paper/85 to-transparent"
+      />
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 right-0 w-5 bg-gradient-to-l from-paper/85 to-transparent"
+      />
     </motion.nav>
   );
 }
