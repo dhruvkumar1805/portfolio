@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { FaMusic, FaSpotify } from "react-icons/fa6";
+import { FaChevronUp, FaMusic, FaSpotify } from "react-icons/fa6";
 import { VscVscode } from "react-icons/vsc";
 
 type Track = {
@@ -86,6 +86,18 @@ function Equalizer({ reduceMotion }: { reduceMotion: boolean }) {
         ),
       )}
     </span>
+  );
+}
+
+function ExpandChevron({ expanded }: { expanded: boolean }) {
+  return (
+    <FaChevronUp
+      size={8}
+      className={`shrink-0 self-center text-ink-3 transition-transform duration-[var(--dur)] ${
+        expanded ? "rotate-180" : ""
+      }`}
+      aria-hidden="true"
+    />
   );
 }
 
@@ -234,14 +246,14 @@ export default function StatusBar() {
   const musicStackClass = !shouldStack
     ? ""
     : musicIsFront
-      ? `relative z-10 ${expanded ? "mt-2" : "-mt-11"} ${stackTransition}`
-      : `relative z-0 ${expanded ? "scale-100 opacity-100" : "scale-[0.94] opacity-80"} ${stackTransition}`;
+      ? `relative z-10 ${expanded ? "mt-2" : "-mt-12"} ${stackTransition}`
+      : `relative z-0 ${expanded ? "scale-100 opacity-100" : "scale-[0.92] opacity-70"} ${stackTransition}`;
 
   const codingStackClass = !shouldStack
     ? ""
     : musicIsFront
-      ? `relative z-0 ${expanded ? "scale-100 opacity-100" : "scale-[0.94] opacity-80"} ${stackTransition}`
-      : `relative z-10 ${expanded ? "mt-2" : "-mt-11"} ${stackTransition}`;
+      ? `relative z-0 ${expanded ? "scale-100 opacity-100" : "scale-[0.92] opacity-70"} ${stackTransition}`
+      : `relative z-10 ${expanded ? "mt-2" : "-mt-12"} ${stackTransition}`;
 
   const musicOrder = shouldStack ? (musicIsFront ? 2 : 1) : undefined;
   const codingOrder = shouldStack ? (musicIsFront ? 1 : 2) : undefined;
@@ -257,7 +269,9 @@ export default function StatusBar() {
       onFocus={() => setStackOpen(true)}
       onBlur={() => setStackOpen(false)}
       onClick={() => !canHover && shouldStack && setStackOpen((open) => !open)}
-      className="fixed bottom-[calc(1.125rem+env(safe-area-inset-bottom))] left-1/2 z-40 flex w-fit max-w-[calc(100vw-24px)] flex-col"
+      className={`fixed bottom-[calc(1.125rem+env(safe-area-inset-bottom))] left-1/2 z-40 flex w-fit max-w-[calc(100vw-24px)] flex-col ${
+        !canHover && shouldStack ? "cursor-pointer" : ""
+      }`}
     >
       {hasMusic && track && (
         <span
@@ -306,13 +320,16 @@ export default function StatusBar() {
               className="truncate font-mono-tight text-[10.5px] tracking-[-0.01em] text-ink-3"
             />
           </span>
-          <a href={track.url} target="_blank" rel="noreferrer" className="contents">
-            <FaSpotify
-              size={15}
-              className="ml-auto shrink-0 self-center text-ink-3 transition-colors duration-[var(--dur)] hover:text-accent-2"
-              aria-hidden="true"
-            />
-          </a>
+          <span className="ml-auto flex shrink-0 items-center gap-2.5">
+            {shouldStack && musicIsFront && <ExpandChevron expanded={expanded} />}
+            <a href={track.url} target="_blank" rel="noreferrer" className="contents">
+              <FaSpotify
+                size={15}
+                className="shrink-0 self-center text-ink-3 transition-colors duration-[var(--dur)] hover:text-accent-2"
+                aria-hidden="true"
+              />
+            </a>
+          </span>
         </span>
       )}
       {hasCoding && coding && (
@@ -348,6 +365,11 @@ export default function StatusBar() {
               />
             )}
           </span>
+          {shouldStack && !musicIsFront && (
+            <span className="ml-auto shrink-0 self-center">
+              <ExpandChevron expanded={expanded} />
+            </span>
+          )}
         </span>
       )}
     </motion.div>
