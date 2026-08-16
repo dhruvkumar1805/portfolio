@@ -189,8 +189,8 @@ async function fetchActivePlayback(token: string): Promise<NowPlaying | null | "
 
   if (res.status === 200) {
     const data: CurrentlyPlayingResponse = await res.json();
-    if (data.is_playing && data.item) {
-      return { isPlaying: true, track: toTrack(data.item) };
+    if (data.item) {
+      return { isPlaying: Boolean(data.is_playing), track: toTrack(data.item) };
     }
     return null;
   }
