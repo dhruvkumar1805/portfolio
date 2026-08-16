@@ -1,3 +1,5 @@
+import { Redis } from "@upstash/redis";
+
 type SpotifyArtist = {
   name: string;
 };
@@ -46,13 +48,23 @@ const RECENTLY_PLAYED_URL =
   "https://api.spotify.com/v1/me/player/recently-played?limit=1";
 
 const PLAYING_CACHE_TTL_MS = 4000;
-const RECENT_CACHE_TTL_MS = 60000;
+const RECENT_CACHE_TTL_SEC = 60;
+const LAST_GOOD_TTL_SEC = 86400;
+
+const RECENT_KEY = "spotify:recent";
+const LAST_GOOD_KEY = "spotify:lastGood";
+const RATE_LIMIT_KEY = "spotify:rateLimitedUntil";
+
+const redis =
+  process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+    ? new Redis({
+        url: process.env.UPSTASH_REDIS_REST_URL,
+        token: process.env.UPSTASH_REDIS_REST_TOKEN,
+      })
+    : null;
 
 let cachedToken: { value: string; expiresAt: number } | null = null;
 let cachedPlaying: { value: NowPlaying | null; expiresAt: number } | null = null;
-let cachedRecent: { value: NowPlaying | null; expiresAt: number } | null = null;
-let lastGoodStatus: NowPlaying | null = null;
-let rateLimitedUntil = 0;
 
 async function getAccessToken(): Promise<string | null> {
   if (cachedToken && cachedToken.expiresAt > Date.now()) {
@@ -98,13 +110,47 @@ function toTrack(item: SpotifyItem): SpotifyTrack {
   };
 }
 
+async function getLastGoodStatus(): Promise<NowPlaying | null> {
+  if (!redis) return null;
+  return (await redis.get<NowPlaying>(LAST_GOOD_KEY)) ?? null;
+}
+
+async function setLastGoodStatus(status: NowPlaying) {
+  if (!redis) return;
+  await redis.set(LAST_GOOD_KEY, status, { ex: LAST_GOOD_TTL_SEC });
+}
+
+async function isRateLimited(): Promise<boolean> {
+  if (!redis) return false;
+  const until = await redis.get<number>(RATE_LIMIT_KEY);
+  return Boolean(until && until > Date.now());
+}
+
+async function applyRateLimitBackoff(res: Response) {
+  if (!redis) return;
+  const retryAfterSec = Number(res.headers.get("retry-after"));
+  const backoffMs = Number.isFinite(retryAfterSec) ? retryAfterSec * 1000 : 60000;
+  await redis.set(RATE_LIMIT_KEY, Date.now() + backoffMs, { px: backoffMs });
+}
+
+async function getCachedRecent(): Promise<NowPlaying | undefined> {
+  if (!redis) return undefined;
+  const value = await redis.get<NowPlaying>(RECENT_KEY);
+  return value ?? undefined;
+}
+
+async function setCachedRecent(value: NowPlaying) {
+  if (!redis) return;
+  await redis.set(RECENT_KEY, value, { ex: RECENT_CACHE_TTL_SEC });
+}
+
 export async function getNowPlaying(): Promise<NowPlaying | null> {
-  if (rateLimitedUntil > Date.now()) {
-    return lastGoodStatus;
+  if (await isRateLimited()) {
+    return getLastGoodStatus();
   }
 
   const token = await getAccessToken();
-  if (!token) return lastGoodStatus;
+  if (!token) return getLastGoodStatus();
 
   let active: NowPlaying | null | "error";
   if (cachedPlaying && cachedPlaying.expiresAt > Date.now()) {
@@ -116,27 +162,23 @@ export async function getNowPlaying(): Promise<NowPlaying | null> {
     }
   }
 
-  if (active === "error") return lastGoodStatus;
+  if (active === "error") return getLastGoodStatus();
   if (active) {
-    lastGoodStatus = active;
+    await setLastGoodStatus(active);
     return active;
   }
 
-  if (cachedRecent && cachedRecent.expiresAt > Date.now()) {
-    return cachedRecent.value;
+  const cachedRecent = await getCachedRecent();
+  if (cachedRecent !== undefined) {
+    return cachedRecent;
   }
 
   const recent = await fetchLastPlayed(token);
-  if (recent === "error") return lastGoodStatus;
+  if (recent === "error") return getLastGoodStatus();
 
-  cachedRecent = { value: recent, expiresAt: Date.now() + RECENT_CACHE_TTL_MS };
-  lastGoodStatus = recent;
+  await setCachedRecent(recent);
+  await setLastGoodStatus(recent);
   return recent;
-}
-
-function applyRateLimitBackoff(res: Response) {
-  const retryAfterSec = Number(res.headers.get("retry-after"));
-  rateLimitedUntil = Date.now() + (Number.isFinite(retryAfterSec) ? retryAfterSec * 1000 : 60000);
 }
 
 async function fetchActivePlayback(token: string): Promise<NowPlaying | null | "error"> {
@@ -155,7 +197,7 @@ async function fetchActivePlayback(token: string): Promise<NowPlaying | null | "
 
   if (res.status === 204) return null;
 
-  if (res.status === 429) applyRateLimitBackoff(res);
+  if (res.status === 429) await applyRateLimitBackoff(res);
   return "error";
 }
 
@@ -166,7 +208,7 @@ async function fetchLastPlayed(token: string): Promise<NowPlaying | "error"> {
   });
 
   if (!res.ok) {
-    if (res.status === 429) applyRateLimitBackoff(res);
+    if (res.status === 429) await applyRateLimitBackoff(res);
     return "error";
   }
 
