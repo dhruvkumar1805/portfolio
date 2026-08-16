@@ -22,7 +22,7 @@ export default function Contact() {
           <span>Contact</span>
         </span>
         <span className="flex items-center gap-2 text-ink-2">
-          <span className="relative inline-flex h-1.5 w-1.5 shrink-0">
+          <span className="relative -translate-y-px inline-flex h-1.5 w-1.5 shrink-0">
             <span className="status-ping absolute inset-0 rounded-full bg-accent-2" />
             <span className="relative h-1.5 w-1.5 rounded-full bg-accent-2" />
           </span>
