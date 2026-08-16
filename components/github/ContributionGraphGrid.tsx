@@ -215,12 +215,12 @@ export default function ContributionGraphGrid({
               left: Math.min(Math.max(tooltipPos.x, 70), window.innerWidth - 70),
               top: tooltipPos.y - 44,
               transform: "translateX(-50%)",
-              borderColor: "var(--accent)",
-              background: "#181818",
-              color: "#f2f2f2",
+              borderColor: "var(--accent-2)",
+              background: "var(--paper-2)",
+              color: "var(--ink-2)",
             }}
           >
-            <span className="font-bold" style={{ color: "var(--accent)" }}>
+            <span className="font-bold" style={{ color: "var(--accent-text)" }}>
               {hovered.count}
             </span>{" "}
             {hovered.count === 1 ? "contribution" : "contributions"} &middot; {formatDay(hovered.date)}

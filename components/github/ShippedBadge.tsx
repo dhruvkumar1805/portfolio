@@ -14,27 +14,19 @@ export default function ShippedBadge({
       initial={{ opacity: 0, y: -3 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1], delay: 0.15 }}
-      className="inline-flex items-center gap-2 rounded-full font-mono-tight text-[10.5px] font-medium tracking-[0.08em] whitespace-nowrap uppercase"
-      style={
-        shipped
-          ? {
-              color: "#34d399",
-              background: "color-mix(in oklch, #34d399 12%, transparent)",
-              padding: "3px 9px 3px 7px",
-            }
-          : { color: "var(--ink-3)" }
-      }
+      className="inline-flex items-center gap-2 font-mono-tight text-[10.5px] font-medium tracking-[0.08em] whitespace-nowrap uppercase"
+      style={{ color: shipped ? "var(--accent-2)" : "var(--ink-3)" }}
     >
       <span className="relative inline-flex h-1.5 w-1.5 shrink-0">
         {shipped && (
           <span
             className="status-ping absolute inset-0 rounded-full"
-            style={{ background: "#34d399" }}
+            style={{ background: "var(--accent-2)" }}
           />
         )}
         <span
           className="relative h-1.5 w-1.5 rounded-full"
-          style={{ background: shipped ? "#34d399" : "var(--ink-3)" }}
+          style={{ background: shipped ? "var(--accent-2)" : "var(--ink-3)" }}
         />
       </span>
       {shipped ? <>shipped{count > 0 && <> &middot; +{count}</>}</> : "nothing yet"}
