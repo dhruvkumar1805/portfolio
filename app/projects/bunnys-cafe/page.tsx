@@ -116,7 +116,7 @@ export default function BunnysCafeCaseStudy() {
       <Reveal delay={0.12} className="mt-10">
         <div className="overflow-hidden rounded-[5px] border border-line">
           <Image
-            src="/images/projects/bunnys-cafe-admin.png"
+            src="/images/projects/bunnys-cafe-admin.jpg"
             alt="Bunny's Cafe admin dashboard: menu management with live order status"
             width={2400}
             height={1350}

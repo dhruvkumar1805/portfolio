@@ -111,7 +111,7 @@ export default function SolvoCaseStudy() {
       <Reveal delay={0.12} className="mt-10">
         <div className="overflow-hidden rounded-[5px] border border-line">
           <Image
-            src="/images/projects/solvo-dashboard.png"
+            src="/images/projects/solvo-dashboard.jpg"
             alt="Solvo admin dashboard: conversation volume, AI resolution rate, and recent chats"
             width={2400}
             height={1350}
