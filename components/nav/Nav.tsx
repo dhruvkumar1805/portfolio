@@ -69,13 +69,19 @@ export default function Nav() {
         ref={navRef}
         onMouseLeave={() => setHovered(null)}
       >
-        <a
-          href="#top"
-          aria-label="Top"
-          className="flex shrink-0 items-center border-r border-line py-1.5 pr-2.5 pl-2 font-mono-tight text-[11.5px] tracking-[0.06em] text-ink-2 transition-colors duration-[var(--dur)] hover:text-accent-2"
-        >
-          DK
-        </a>
+        <div className="sticky left-0 z-[1] flex shrink-0 items-stretch">
+          <a
+            href="#top"
+            aria-label="Top"
+            className="flex shrink-0 items-center border-r border-line bg-paper py-1.5 pr-2.5 pl-2 font-mono-tight text-[11.5px] tracking-[0.06em] text-ink-2 transition-colors duration-[var(--dur)] hover:text-accent-2"
+          >
+            DK
+          </a>
+          <span
+            aria-hidden="true"
+            className="pointer-events-none w-5 shrink-0 bg-gradient-to-r from-paper to-transparent"
+          />
+        </div>
         {navLinks.map((link) => (
           <a
             key={link.id}
@@ -99,14 +105,6 @@ export default function Nav() {
         ))}
         <ThemeToggle />
       </div>
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-0 w-5 bg-gradient-to-r from-paper/85 to-transparent"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 w-5 bg-gradient-to-l from-paper/85 to-transparent"
-      />
     </motion.nav>
   );
 }

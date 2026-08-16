@@ -26,39 +26,45 @@ export default function ThemeToggle() {
   }, [toggle]);
 
   return (
-    <button
-      type="button"
-      onClick={toggle}
-      aria-label="Toggle dark mode"
-      className="sticky right-0 z-[1] flex shrink-0 items-center justify-center border-l border-line bg-paper py-2 pr-2 pl-3 text-ink-2 transition-colors duration-[var(--dur)] hover:text-accent-2"
-    >
-      <span className="relative block h-[15px] w-[15px]">
-        <AnimatePresence initial={false} mode="wait">
-          {theme === "dark" ? (
-            <motion.span
-              key="moon"
-              className="absolute inset-0 flex items-center justify-center"
-              initial={{ opacity: 0, rotate: -90, scale: 0.6 }}
-              animate={{ opacity: 1, rotate: 0, scale: 1 }}
-              exit={{ opacity: 0, rotate: 90, scale: 0.6 }}
-              transition={{ duration: 0.42, ease: [0.2, 0.7, 0.2, 1] }}
-            >
-              <FiMoon size={14} />
-            </motion.span>
-          ) : (
-            <motion.span
-              key="sun"
-              className="absolute inset-0 flex items-center justify-center"
-              initial={{ opacity: 0, rotate: -90, scale: 0.6 }}
-              animate={{ opacity: 1, rotate: 0, scale: 1 }}
-              exit={{ opacity: 0, rotate: 90, scale: 0.6 }}
-              transition={{ duration: 0.42, ease: [0.2, 0.7, 0.2, 1] }}
-            >
-              <FiSun size={14} />
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </span>
-    </button>
+    <div className="sticky right-0 z-[1] flex shrink-0 items-stretch">
+      <span
+        aria-hidden="true"
+        className="pointer-events-none w-5 shrink-0 bg-gradient-to-l from-paper to-transparent"
+      />
+      <button
+        type="button"
+        onClick={toggle}
+        aria-label="Toggle dark mode"
+        className="flex shrink-0 items-center justify-center border-l border-line bg-paper py-2 pr-2 pl-3 text-ink-2 transition-colors duration-[var(--dur)] hover:text-accent-2"
+      >
+        <span className="relative block h-[15px] w-[15px]">
+          <AnimatePresence initial={false} mode="wait">
+            {theme === "dark" ? (
+              <motion.span
+                key="moon"
+                className="absolute inset-0 flex items-center justify-center"
+                initial={{ opacity: 0, rotate: -90, scale: 0.6 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 90, scale: 0.6 }}
+                transition={{ duration: 0.42, ease: [0.2, 0.7, 0.2, 1] }}
+              >
+                <FiMoon size={14} />
+              </motion.span>
+            ) : (
+              <motion.span
+                key="sun"
+                className="absolute inset-0 flex items-center justify-center"
+                initial={{ opacity: 0, rotate: -90, scale: 0.6 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 90, scale: 0.6 }}
+                transition={{ duration: 0.42, ease: [0.2, 0.7, 0.2, 1] }}
+              >
+                <FiSun size={14} />
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </span>
+      </button>
+    </div>
   );
 }
