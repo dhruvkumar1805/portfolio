@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { FaMusic, FaSpotify } from "react-icons/fa6";
@@ -122,10 +122,24 @@ export default function StatusBar() {
   const [stackOpen, setStackOpen] = useState(false);
   const [canHover, setCanHover] = useState(false);
   const reduceMotion = Boolean(useReducedMotion());
+  const stackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setCanHover(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
   }, []);
+
+  useEffect(() => {
+    if (canHover || !stackOpen) return;
+
+    function handleOutside(e: PointerEvent) {
+      if (stackRef.current && !stackRef.current.contains(e.target as Node)) {
+        setStackOpen(false);
+      }
+    }
+
+    document.addEventListener("pointerdown", handleOutside);
+    return () => document.removeEventListener("pointerdown", handleOutside);
+  }, [canHover, stackOpen]);
 
   useEffect(() => {
     try {
@@ -234,6 +248,7 @@ export default function StatusBar() {
 
   return (
     <motion.div
+      ref={stackRef}
       initial={{ opacity: 0, y: 16, x: "-50%" }}
       animate={{ opacity: 1, y: 0, x: "-50%" }}
       transition={{ duration: 0.76, ease: [0.2, 0.7, 0.2, 1] }}
