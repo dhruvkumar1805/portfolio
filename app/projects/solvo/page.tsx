@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
 import Reveal from "@/components/ui/Reveal";
@@ -104,6 +105,19 @@ export default function SolvoCaseStudy() {
               solvochat.com &#8599;
             </a>
           </span>
+        </div>
+      </Reveal>
+
+      <Reveal delay={0.12} className="mt-10">
+        <div className="overflow-hidden rounded-[5px] border border-line">
+          <Image
+            src="/images/projects/solvo-dashboard.png"
+            alt="Solvo admin dashboard: conversation volume, AI resolution rate, and recent chats"
+            width={2400}
+            height={1350}
+            sizes="(min-width: 760px) 760px, 100vw"
+            className="w-full"
+          />
         </div>
       </Reveal>
 
