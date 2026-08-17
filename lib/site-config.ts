@@ -35,6 +35,7 @@ export type Project = {
   href: string;
   hrefLabel: string;
   caseStudyHref?: string;
+  image?: string;
 };
 
 export const projects: Project[] = [
@@ -51,6 +52,7 @@ export const projects: Project[] = [
     href: "https://solvochat.com",
     hrefLabel: "solvochat.com",
     caseStudyHref: "/projects/solvo",
+    image: "/images/projects/solvo-dashboard.jpg",
   },
   {
     slug: "bunnys-cafe",
@@ -65,6 +67,7 @@ export const projects: Project[] = [
     href: "https://bunnyscafe.in",
     hrefLabel: "bunnyscafe.in",
     caseStudyHref: "/projects/bunnys-cafe",
+    image: "/images/projects/bunnys-cafe-admin.jpg",
   },
   {
     slug: "nekopet",

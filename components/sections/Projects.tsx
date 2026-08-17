@@ -1,10 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import Image from "next/image";
+import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
 import { projects, type Project } from "@/lib/site-config";
 import Reveal from "@/components/ui/Reveal";
+
+const PREVIEW_WIDTH = 240;
+const PREVIEW_OFFSET = 28;
 
 function ProjectMeta({ project, tinted }: { project: Project; tinted: boolean }) {
   return (
@@ -54,10 +58,31 @@ function ProjectMeta({ project, tinted }: { project: Project; tinted: boolean })
 
 export default function Projects() {
   const [hovered, setHovered] = useState<string | null>(null);
+  const [canHover, setCanHover] = useState(false);
+  const hoveredProject = projects.find((p) => p.slug === hovered && p.image);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 320, damping: 32 });
+  const springY = useSpring(mouseY, { stiffness: 320, damping: 32 });
+
+  useEffect(() => {
+    setCanHover(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
+  }, []);
+
+  function handleMouseMove(e: React.MouseEvent) {
+    const overflowsRight =
+      e.clientX + PREVIEW_OFFSET + PREVIEW_WIDTH > window.innerWidth - 20;
+    mouseX.set(
+      overflowsRight ? e.clientX - PREVIEW_OFFSET - PREVIEW_WIDTH : e.clientX + PREVIEW_OFFSET
+    );
+    mouseY.set(e.clientY - (PREVIEW_WIDTH * 9) / 16 / 2);
+  }
 
   return (
     <section
       id="projects"
+      onMouseMove={canHover ? handleMouseMove : undefined}
       className="flex flex-wrap items-start gap-x-8 gap-y-4.5 py-(--sp) scroll-mt-23"
     >
       <div className="flex w-33 flex-col gap-1.5 pt-0.5 min-[800px]:sticky min-[800px]:top-22">
@@ -71,6 +96,31 @@ export default function Projects() {
           hover for a look
         </span>
       </div>
+
+      {canHover && (
+        <AnimatePresence>
+          {hoveredProject && (
+            <motion.div
+              key={hoveredProject.slug}
+              aria-hidden="true"
+              initial={{ opacity: 0, scale: 0.94, rotate: -3 }}
+              animate={{ opacity: 1, scale: 1, rotate: -2 }}
+              exit={{ opacity: 0, scale: 0.94, rotate: -3 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              style={{ x: springX, y: springY, width: PREVIEW_WIDTH }}
+              className="pointer-events-none fixed top-0 left-0 z-30 aspect-video overflow-hidden rounded-lg border border-line shadow-[0_20px_44px_-16px_rgba(0,0,0,0.4)]"
+            >
+              <Image
+                src={hoveredProject.image!}
+                alt=""
+                fill
+                sizes={`${PREVIEW_WIDTH}px`}
+                className="object-cover"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
 
       <div className="min-w-0 flex-1 basis-135">
         <div className="flex flex-col">
