@@ -78,7 +78,9 @@ export default function ContributionGraphGrid({
   lastShipped?: { message: string; repo: string; timeAgo: string; url: string } | null;
 }) {
   const [hovered, setHovered] = useState<ContributionDay | null>(null);
-  const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null);
+  const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number; flip: boolean } | null>(
+    null
+  );
   const prefersReducedMotion = useReducedMotion();
   const displayTotal = useCountUp(total, Boolean(prefersReducedMotion));
 
@@ -95,7 +97,7 @@ export default function ContributionGraphGrid({
         <div className="relative min-w-0 flex-1">
           <HorizontalScroll
             scrollToSelector="[data-today]"
-            className="overflow-x-auto pt-5 no-scrollbar"
+            className="overflow-x-auto pt-5 pb-3 no-scrollbar"
           >
             <div
               className="grid gap-1 pl-6 pr-8"
@@ -142,7 +144,12 @@ export default function ContributionGraphGrid({
                   const isToday = cell.date === today;
                   const showTooltipAt = (target: HTMLElement) => {
                     const rect = target.getBoundingClientRect();
-                    setTooltipPos({ x: rect.left + rect.width / 2, y: rect.top });
+                    const flip = rect.top < 70;
+                    setTooltipPos({
+                      x: rect.left + rect.width / 2,
+                      y: flip ? rect.bottom : rect.top,
+                      flip,
+                    });
                   };
                   return (
                     <motion.button
@@ -213,7 +220,7 @@ export default function ContributionGraphGrid({
             className="fixed z-50 pointer-events-none rounded-md border px-2.5 py-1.5 font-mono-tight text-[10.5px] whitespace-nowrap"
             style={{
               left: Math.min(Math.max(tooltipPos.x, 70), window.innerWidth - 70),
-              top: tooltipPos.y - 44,
+              top: tooltipPos.flip ? tooltipPos.y + 10 : tooltipPos.y - 44,
               transform: "translateX(-50%)",
               borderColor: "var(--accent-2)",
               background: "var(--paper-2)",
