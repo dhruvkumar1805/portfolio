@@ -36,6 +36,7 @@ export type Project = {
   hrefLabel: string;
   caseStudyHref?: string;
   image?: string;
+  stats?: { label: string; value: string }[];
 };
 
 export const projects: Project[] = [
@@ -53,6 +54,11 @@ export const projects: Project[] = [
     hrefLabel: "solvochat.com",
     caseStudyHref: "/projects/solvo",
     image: "/images/projects/solvo-dashboard.jpg",
+    stats: [
+      { label: "Role", value: "Sole designer & engineer" },
+      { label: "Retrieval", value: "400-word chunks, 50 overlap" },
+      { label: "Answer time", value: "Under 2 seconds" },
+    ],
   },
   {
     slug: "bunnys-cafe",
@@ -68,6 +74,11 @@ export const projects: Project[] = [
     hrefLabel: "bunnyscafe.in",
     caseStudyHref: "/projects/bunnys-cafe",
     image: "/images/projects/bunnys-cafe-admin.jpg",
+    stats: [
+      { label: "Role", value: "Pitched, designed & built solo" },
+      { label: "Order status", value: "1.5s refresh, diffed not polled" },
+      { label: "Shipped", value: "195 commits, solo" },
+    ],
   },
   {
     slug: "nekopet",
@@ -76,10 +87,17 @@ export const projects: Project[] = [
     tag: "Open source · solo build",
     description:
       "A desktop pet for Wayland, in Rust. Speaks wlr-layer-shell directly, reads raw keys from /dev/input, renders sprites through shared-memory buffers. Its eyes follow the cursor.",
+    metricValue: "1,000",
+    metricLabel: "Lines of Rust",
     stack: ["Rust", "Wayland", "smithay-client-toolkit"],
     href: "https://github.com/dhruvkumar1805/nekopet",
     hrefLabel: "github",
     caseStudyHref: "/projects/nekopet",
+    stats: [
+      { label: "Role", value: "Open source, solo build" },
+      { label: "States", value: "7, one event loop, no library" },
+      { label: "Dependencies", value: "0 external processes" },
+    ],
   },
   {
     slug: "cipheros",
@@ -94,6 +112,11 @@ export const projects: Project[] = [
     href: "https://cipheros.org.in/",
     hrefLabel: "cipheros.org.in",
     caseStudyHref: "/projects/cipheros",
+    stats: [
+      { label: "Role", value: "Official maintainer, 2 ROMs" },
+      { label: "Platform", value: "msm8953 device trees" },
+      { label: "Active", value: "2021–22" },
+    ],
   },
 ];
 
