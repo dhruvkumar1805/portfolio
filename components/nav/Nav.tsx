@@ -1,17 +1,23 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { navLinks } from "@/lib/site-config";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export default function Nav() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const [active, setActive] = useState<string | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
   const navRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const logoRef = useRef<HTMLDivElement>(null);
+  const themeToggleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!isHome) return;
     function onScroll() {
       const scrollY = window.scrollY;
       const threshold = window.innerHeight * 0.4;
@@ -40,7 +46,7 @@ export default function Nav() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, []);
+  }, [isHome]);
 
   useEffect(() => {
     const id = hovered ?? active;
@@ -48,10 +54,13 @@ export default function Nav() {
     if (el && navRef.current) {
       const navRect = navRef.current.getBoundingClientRect();
       const linkRect = el.getBoundingClientRect();
+      const leftGuard = (logoRef.current?.getBoundingClientRect().width ?? 0) + 20;
+      const rightGuard = (themeToggleRef.current?.getBoundingClientRect().width ?? 0) + 20;
       const overflow = linkRect.right - navRect.right;
       const underflow = navRect.left - linkRect.left;
-      if (overflow > 0) navRef.current.scrollBy({ left: overflow + 12, behavior: "smooth" });
-      if (underflow > 0) navRef.current.scrollBy({ left: -(underflow + 12), behavior: "smooth" });
+      if (overflow > 0) navRef.current.scrollBy({ left: overflow + rightGuard, behavior: "smooth" });
+      if (underflow > 0)
+        navRef.current.scrollBy({ left: -(underflow + leftGuard), behavior: "smooth" });
     }
   }, [hovered, active]);
 
@@ -69,9 +78,9 @@ export default function Nav() {
         ref={navRef}
         onMouseLeave={() => setHovered(null)}
       >
-        <div className="sticky left-0 z-[1] flex shrink-0 items-stretch">
+        <div ref={logoRef} className="sticky left-0 z-[1] flex shrink-0 items-stretch">
           <a
-            href="#top"
+            href={isHome ? "#top" : "/"}
             aria-label="Top"
             className="flex shrink-0 items-center border-r border-line bg-paper py-1.5 pr-2.5 pl-2 font-mono-tight text-[11.5px] tracking-[0.06em] text-ink-2 transition-colors duration-[var(--dur)] hover:text-accent-2"
           >
@@ -88,7 +97,7 @@ export default function Nav() {
             ref={(el) => {
               linkRefs.current[link.id] = el;
             }}
-            href={link.href}
+            href={isHome ? link.href : `/${link.href}`}
             onMouseEnter={() => setHovered(link.id)}
             aria-current={active === link.id ? "true" : undefined}
             className="relative shrink-0 rounded-full px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] transition-colors duration-300"
@@ -104,7 +113,7 @@ export default function Nav() {
             {link.label}
           </a>
         ))}
-        <ThemeToggle />
+        <ThemeToggle wrapperRef={themeToggleRef} />
       </div>
     </motion.nav>
   );

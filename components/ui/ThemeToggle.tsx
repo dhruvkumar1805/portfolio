@@ -1,11 +1,16 @@
 "use client";
 
 import { useEffect } from "react";
+import type { Ref } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiSun, FiMoon } from "react-icons/fi";
 import { useTheme } from "@/lib/use-theme";
 
-export default function ThemeToggle() {
+export default function ThemeToggle({
+  wrapperRef,
+}: {
+  wrapperRef?: Ref<HTMLDivElement>;
+}) {
   const { theme, toggle } = useTheme();
 
   useEffect(() => {
@@ -26,7 +31,7 @@ export default function ThemeToggle() {
   }, [toggle]);
 
   return (
-    <div className="sticky right-0 z-[1] flex shrink-0 items-stretch">
+    <div ref={wrapperRef} className="sticky right-0 z-[1] flex shrink-0 items-stretch">
       <span
         aria-hidden="true"
         className="pointer-events-none absolute top-0 right-full bottom-0 w-5 bg-gradient-to-l from-paper to-transparent"
