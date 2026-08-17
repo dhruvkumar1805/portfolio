@@ -238,7 +238,8 @@ export default function StatusBar() {
   const musicLive = status?.music?.isPlaying ?? false;
   const codingLive = coding?.isActive ?? false;
   const musicIsFront = musicLive || !codingLive;
-  const expanded = !shouldStack || stackOpen;
+  const expanded = (canHover && !shouldStack) || stackOpen;
+  const compact = !canHover && !expanded;
 
   const stackTransition =
     "transition-[transform,opacity,margin-top] duration-[var(--dur)] ease-[cubic-bezier(0.2,0.7,0.2,1)]";
@@ -268,13 +269,16 @@ export default function StatusBar() {
       onMouseLeave={() => canHover && setStackOpen(false)}
       onFocus={() => setStackOpen(true)}
       onBlur={() => setStackOpen(false)}
-      onClick={() => !canHover && shouldStack && setStackOpen((open) => !open)}
+      onClick={() => !canHover && setStackOpen((open) => !open)}
+      aria-expanded={!canHover ? expanded : undefined}
       className={`fixed bottom-[calc(1.125rem+env(safe-area-inset-bottom))] left-1/2 z-40 flex w-fit max-w-[calc(100vw-24px)] flex-col ${
-        !canHover && shouldStack ? "cursor-pointer" : ""
+        !canHover ? "cursor-pointer" : ""
       }`}
     >
       {hasMusic && track && (
-        <span
+        <motion.span
+          layout
+          transition={{ duration: 0.32, ease: [0.2, 0.7, 0.2, 1] }}
           style={{ order: musicOrder }}
           className={`group min-w-0 ${pillClass} ${musicStackClass}`}
         >
@@ -297,43 +301,54 @@ export default function StatusBar() {
               </span>
             )}
           </span>
-          <span className="flex min-w-0 max-w-[180px] flex-col justify-center gap-0.5 leading-[1.15]">
-            <span
-              className={`flex items-center gap-1.5 font-mono-tight text-[9.5px] font-medium tracking-[0.1em] uppercase ${
-                status?.music?.isPlaying ? "text-accent-2" : "text-ink-3"
-              }`}
-            >
-              <StatusDot live={status?.music?.isPlaying ?? false} />
-              {status?.music?.isPlaying ? "Now playing" : "Last played"}
-              {status?.music?.isPlaying && <Equalizer reduceMotion={reduceMotion} />}
-            </span>
-            <a href={track.url} target="_blank" rel="noreferrer" className="contents">
-              <Crossfade
-                text={track.title}
-                reduceMotion={reduceMotion}
-                className="truncate font-mono-tight text-[12.5px] font-medium tracking-[-0.01em] text-ink-2 hover:text-accent-2"
-              />
-            </a>
-            <Crossfade
-              text={track.artist}
-              reduceMotion={reduceMotion}
-              className="truncate font-mono-tight text-[10.5px] tracking-[-0.01em] text-ink-3"
-            />
-          </span>
-          <span className="ml-auto flex shrink-0 items-center gap-2.5">
-            {shouldStack && musicIsFront && <ExpandChevron expanded={expanded} />}
-            <a href={track.url} target="_blank" rel="noreferrer" className="contents">
-              <FaSpotify
-                size={15}
-                className="shrink-0 self-center text-ink-3 transition-colors duration-[var(--dur)] hover:text-accent-2"
-                aria-hidden="true"
-              />
-            </a>
-          </span>
-        </span>
+          {!compact && (
+            <>
+              <span className="flex min-w-0 max-w-[180px] flex-col justify-center gap-0.5 leading-[1.15]">
+                <span
+                  className={`flex items-center gap-1.5 font-mono-tight text-[9.5px] font-medium tracking-[0.1em] uppercase ${
+                    status?.music?.isPlaying ? "text-accent-2" : "text-ink-3"
+                  }`}
+                >
+                  <StatusDot live={status?.music?.isPlaying ?? false} />
+                  {status?.music?.isPlaying ? "Now playing" : "Last played"}
+                  {status?.music?.isPlaying && <Equalizer reduceMotion={reduceMotion} />}
+                </span>
+                <a href={track.url} target="_blank" rel="noreferrer" className="contents">
+                  <Crossfade
+                    text={track.title}
+                    reduceMotion={reduceMotion}
+                    className="truncate font-mono-tight text-[12.5px] font-medium tracking-[-0.01em] text-ink-2 hover:text-accent-2"
+                  />
+                </a>
+                <Crossfade
+                  text={track.artist}
+                  reduceMotion={reduceMotion}
+                  className="truncate font-mono-tight text-[10.5px] tracking-[-0.01em] text-ink-3"
+                />
+              </span>
+              <span className="ml-auto flex shrink-0 items-center gap-2.5">
+                {musicIsFront && (shouldStack || !canHover) && (
+                  <ExpandChevron expanded={expanded} />
+                )}
+                <a href={track.url} target="_blank" rel="noreferrer" className="contents">
+                  <FaSpotify
+                    size={15}
+                    className="shrink-0 self-center text-ink-3 transition-colors duration-[var(--dur)] hover:text-accent-2"
+                    aria-hidden="true"
+                  />
+                </a>
+              </span>
+            </>
+          )}
+        </motion.span>
       )}
       {hasCoding && coding && (
-        <span style={{ order: codingOrder }} className={`${pillClass} ${codingStackClass}`}>
+        <motion.span
+          layout
+          transition={{ duration: 0.32, ease: [0.2, 0.7, 0.2, 1] }}
+          style={{ order: codingOrder }}
+          className={`${pillClass} ${codingStackClass}`}
+        >
           <span
             className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border bg-paper-2 transition-colors duration-[var(--dur)] ${
               coding.isActive ? "border-accent-2/50" : "border-line/60"
@@ -341,36 +356,40 @@ export default function StatusBar() {
           >
             <VscVscode size={17} className="text-ink-3" aria-hidden="true" />
           </span>
-          <span className="flex min-w-0 flex-col justify-center gap-0.5 leading-[1.15]">
-            <span
-              className={`flex items-center gap-1.5 font-mono-tight text-[9.5px] font-medium tracking-[0.1em] uppercase ${
-                coding.isActive ? "text-accent-2" : "text-ink-3"
-              }`}
-            >
-              <StatusDot live={coding.isActive} />
-              {coding.isActive ? "Coding now" : "Last coded"}
-            </span>
-            <Crossfade
-              text={codingLabel}
-              reduceMotion={reduceMotion}
-              className={`truncate font-mono-tight text-[12.5px] font-medium tracking-[-0.01em] ${
-                coding.isActive ? "text-ink-2" : "text-ink-3"
-              }`}
-            />
-            {codingDetail && (
-              <Crossfade
-                text={codingDetail}
-                reduceMotion={reduceMotion}
-                className="truncate font-mono-tight text-[10.5px] tracking-[-0.01em] text-ink-3"
-              />
-            )}
-          </span>
-          {shouldStack && !musicIsFront && (
-            <span className="ml-auto shrink-0 self-center">
-              <ExpandChevron expanded={expanded} />
-            </span>
+          {!compact && (
+            <>
+              <span className="flex min-w-0 flex-col justify-center gap-0.5 leading-[1.15]">
+                <span
+                  className={`flex items-center gap-1.5 font-mono-tight text-[9.5px] font-medium tracking-[0.1em] uppercase ${
+                    coding.isActive ? "text-accent-2" : "text-ink-3"
+                  }`}
+                >
+                  <StatusDot live={coding.isActive} />
+                  {coding.isActive ? "Coding now" : "Last coded"}
+                </span>
+                <Crossfade
+                  text={codingLabel}
+                  reduceMotion={reduceMotion}
+                  className={`truncate font-mono-tight text-[12.5px] font-medium tracking-[-0.01em] ${
+                    coding.isActive ? "text-ink-2" : "text-ink-3"
+                  }`}
+                />
+                {codingDetail && (
+                  <Crossfade
+                    text={codingDetail}
+                    reduceMotion={reduceMotion}
+                    className="truncate font-mono-tight text-[10.5px] tracking-[-0.01em] text-ink-3"
+                  />
+                )}
+              </span>
+              {!musicIsFront && (shouldStack || !canHover) && (
+                <span className="ml-auto shrink-0 self-center">
+                  <ExpandChevron expanded={expanded} />
+                </span>
+              )}
+            </>
           )}
-        </span>
+        </motion.span>
       )}
     </motion.div>
   );

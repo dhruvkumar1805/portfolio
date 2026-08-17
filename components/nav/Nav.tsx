@@ -100,7 +100,7 @@ export default function Nav() {
             href={isHome ? link.href : `/${link.href}`}
             onMouseEnter={() => setHovered(link.id)}
             aria-current={active === link.id ? "true" : undefined}
-            className="relative shrink-0 rounded-full px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] transition-colors duration-300"
+            className="relative shrink-0 rounded-full px-2.5 py-1.5 text-[12px] font-medium tracking-[-0.01em] transition-colors duration-300 sm:px-3.5 sm:text-[13px]"
             style={{ color: pillId === link.id ? "var(--paper)" : "var(--ink-2)" }}
           >
             {pillId === link.id && (
