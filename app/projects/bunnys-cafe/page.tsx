@@ -117,9 +117,9 @@ export default function BunnysCafeCaseStudy() {
         <div className="overflow-hidden rounded-[5px] border border-line">
           <Image
             src="/images/projects/bunnys-cafe-admin.jpg"
-            alt="Bunny's Cafe admin dashboard: menu management with live order status"
-            width={2400}
-            height={1350}
+            alt="Bunny's Cafe ordering app: menu browsing and live order status tracking"
+            width={1920}
+            height={1440}
             sizes="(min-width: 760px) 760px, 100vw"
             className="w-full"
           />

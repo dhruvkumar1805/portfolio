@@ -113,8 +113,8 @@ export default function SolvoCaseStudy() {
           <Image
             src="/images/projects/solvo-dashboard.jpg"
             alt="Solvo admin dashboard: conversation volume, AI resolution rate, and recent chats"
-            width={2400}
-            height={1350}
+            width={1920}
+            height={1440}
             sizes="(min-width: 760px) 760px, 100vw"
             className="w-full"
           />
