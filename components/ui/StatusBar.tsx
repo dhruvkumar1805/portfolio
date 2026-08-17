@@ -349,14 +349,20 @@ export default function StatusBar() {
           layout
           transition={{ duration: 0.32, ease: [0.2, 0.7, 0.2, 1] }}
           style={{ order: codingOrder }}
-          className={`${pillClass} ${codingStackClass}`}
+          className={`group ${pillClass} ${codingStackClass}`}
         >
           <span
             className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border bg-paper-2 transition-colors duration-[var(--dur)] ${
               coding.isActive ? "border-accent-2/50" : "border-line/60"
             }`}
           >
-            <VscVscode size={17} className="text-ink-3" aria-hidden="true" />
+            <VscVscode
+              size={17}
+              className={`text-ink-3 transition-colors duration-[var(--dur)] group-hover:text-accent-2 ${
+                expanded ? "text-accent-2" : ""
+              }`}
+              aria-hidden="true"
+            />
           </span>
           {!compact && (
             <>
