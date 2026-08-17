@@ -293,7 +293,9 @@ export default function StatusBar() {
                 alt=""
                 fill
                 sizes="40px"
-                className="object-cover grayscale contrast-125"
+                className={`object-cover grayscale contrast-125 transition-[filter] duration-[var(--dur)] group-hover:grayscale-0 ${
+                  expanded ? "grayscale-0" : ""
+                }`}
               />
             ) : (
               <span className="flex h-full w-full items-center justify-center">
