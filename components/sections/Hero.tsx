@@ -2,9 +2,8 @@
 
 import Image from "next/image";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
-import { HiOutlineArrowDown } from "react-icons/hi2";
+import { HiOutlineArrowDown, HiOutlineDocumentText } from "react-icons/hi2";
 import { siteConfig } from "@/lib/site-config";
-import CopyButton from "@/components/ui/CopyButton";
 import VisitorCounter from "@/components/ui/VisitorCounter";
 import Reveal from "@/components/ui/Reveal";
 
@@ -48,7 +47,7 @@ export default function Hero() {
           <span className="text-ink">
             I build retrieval systems and real-time backends,
           </span>{" "}
-          <span className="text-ink-2">sometimes further down than that.</span>
+          <span className="text-ink-2">usually a layer deeper than the job asks.</span>
         </Reveal>
 
         <Reveal
@@ -59,12 +58,13 @@ export default function Hero() {
           <div className="flex min-w-0 flex-1 flex-col justify-between p-[clamp(20px,3vw,28px)]">
             <p className="text-[clamp(15px,1.6vw,17px)] leading-[1.6] text-pretty">
               <span className="text-ink-2">
-                RAG pipelines, row-level-secure Postgres, a Rust desktop pet
-                that talks to Wayland directly.
+                RAG pipelines that cite their sources, Postgres locked down
+                row by row, a Rust desktop pet that talks straight to
+                Wayland.
               </span>{" "}
               <span className="text-ink-3">
-                Started with Android ROMs and device trees in 2021, which is
-                still why I like knowing what&rsquo;s underneath.
+                Started in Android device trees back in 2021. Still the
+                reason I read the layer underneath before trusting it.
               </span>
             </p>
             <div className="mt-6 grid grid-cols-2 gap-x-5 gap-y-2.5 border-t border-line pt-3.5 sm:flex sm:flex-wrap sm:items-center sm:gap-x-7 sm:gap-y-1">
@@ -86,6 +86,7 @@ export default function Hero() {
                 download
                 className="group flex items-center gap-2 border-b border-transparent font-mono-tight text-[11.5px] font-medium tracking-[0.12em] text-ink-2 uppercase transition-colors duration-[var(--dur)] hover:border-accent-2 hover:text-ink"
               >
+                <HiOutlineDocumentText size={13} />
                 Résumé
                 <HiOutlineArrowDown size={12} className="text-ink-3" />
               </a>
