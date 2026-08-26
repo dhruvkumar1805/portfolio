@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
-import { HiOutlineArrowDown, HiOutlineDocumentText } from "react-icons/hi2";
+import { HiOutlineDocumentText } from "react-icons/hi2";
 import { siteConfig } from "@/lib/site-config";
 import VisitorCounter from "@/components/ui/VisitorCounter";
 import Reveal from "@/components/ui/Reveal";
@@ -45,9 +45,9 @@ export default function Hero() {
           className="max-w-[740px] text-[clamp(23px,7vw,40px)] leading-[1.18] font-medium tracking-[-0.02em] text-pretty"
         >
           <span className="text-ink">
-            I build retrieval systems and real-time backends,
+            I build systems, then go a layer deeper
           </span>{" "}
-          <span className="text-ink-2">usually a layer deeper than the job asks.</span>
+          <span className="text-ink-2">and break them before someone else does.</span>
         </Reveal>
 
         <Reveal
@@ -58,9 +58,9 @@ export default function Hero() {
           <div className="flex min-w-0 flex-1 flex-col justify-between p-[clamp(20px,3vw,28px)]">
             <p className="text-[clamp(15px,1.6vw,17px)] leading-[1.6] text-pretty">
               <span className="text-ink-2">
-                RAG pipelines that cite their sources, Postgres locked down
-                row by row, a Rust desktop pet that talks straight to
-                Wayland.
+                RAG pipelines that cite their sources, a client platform&apos;s
+                RLS closed hole by hole, a Rust desktop pet that talks
+                straight to Wayland.
               </span>{" "}
               <span className="text-ink-3">
                 Started in Android device trees back in 2021. Still the
@@ -83,12 +83,13 @@ export default function Hero() {
               ))}
               <a
                 href={siteConfig.resume}
-                download
+                target="_blank"
+                rel="noreferrer"
                 className="group flex items-center gap-2 border-b border-transparent font-mono-tight text-[11.5px] font-medium tracking-[0.12em] text-ink-2 uppercase transition-colors duration-[var(--dur)] hover:border-accent-2 hover:text-ink"
               >
                 <HiOutlineDocumentText size={13} />
                 Résumé
-                <HiOutlineArrowDown size={12} className="text-ink-3" />
+                <span className="text-[10px] text-ink-3">&#8599;</span>
               </a>
             </div>
           </div>

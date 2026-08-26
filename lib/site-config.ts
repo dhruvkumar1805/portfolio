@@ -13,7 +13,7 @@ export const siteConfig = {
   githubHandle: "dhruvkumar1805",
   linkedin: "https://linkedin.com/in/dhruvkumar1805",
   twitter: "https://x.com/dhruvkumar1805",
-  resume: "/dhruv-kumar-resume.pdf",
+  resume: "/resume.pdf",
 };
 
 export const navLinks = [
@@ -134,20 +134,36 @@ export const work: WorkEntry[] = [
     org: "Nomara USA",
     period: "Jul 2026 to now",
     points: [
-      "Leading end-to-end web architecture: production React & TypeScript frontends on Supabase backends with row-level security policies enforced at the database.",
-      "Real-time database workflows and automated AI features wired into day-to-day client operations.",
+      "Sole engineer on Nomara's multi-tenant agency platform: own the schema, the RLS policies, the edge functions, the UI, working straight with the two founders on architecture and product calls.",
+      "Ran a security pass that closed 35+ vulnerabilities across 26 fixes, an unauthenticated account-takeover flow and cross-tenant RLS leaks among them. Cut route bundle sizes up to 92%, 324KB down to 26KB, by code-splitting panels across four major routes.",
+      "Traced a recurring cloud storage bill to a duplication bug in the archive pipeline rather than a provider problem, averting a proposed multi-month AWS migration and cutting retention costs 50% with a fix shipped in days. Also wired the OAuth auto-publish pipeline to Meta, TikTok and YouTube.",
     ],
-    stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Tailwind", "Vercel"],
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "Supabase",
+      "PostgreSQL",
+      "RLS",
+      "Playwright",
+      "Vitest",
+    ],
   },
   {
     role: "Full-Stack Developer, freelance",
     org: "Bunny's Cafe",
-    period: "May 2026",
+    period: "Apr to May 2026",
     points: [
       "Sole developer on a paid engagement: requirements straight from the owner, then design, build, deploy and handoff of a production ordering system.",
       "QR-code table entry, rate-limited phone OTP auth, live order status over Server-Sent Events with a Web Push fallback, admin dashboard, Razorpay payments, Cloudinary media. Checkout completion rose 35% after launch.",
     ],
-    stack: ["Next.js", "Prisma", "PostgreSQL", "Firebase Auth", "Razorpay", "Cloudinary"],
+    stack: [
+      "Next.js",
+      "Prisma",
+      "PostgreSQL",
+      "Firebase Auth",
+      "Razorpay",
+      "Cloudinary",
+    ],
   },
   {
     role: "Android Platform Developer",
@@ -176,52 +192,154 @@ export const stack: StackCategory[] = [
   {
     category: "Languages",
     tools: [
-      { name: "TypeScript", note: "Every product ships in strict mode", daily: true },
-      { name: "Rust", note: "nekopet, and anything that must not fall over", daily: true },
-      { name: "JavaScript", note: "Where a build step would be overkill", daily: false },
-      { name: "C++", note: "Kernel and ROM work, when it asks for it", daily: false },
+      {
+        name: "TypeScript",
+        note: "Every product ships in strict mode",
+        daily: true,
+      },
+      {
+        name: "Rust",
+        note: "nekopet, and anything that must not fall over",
+        daily: true,
+      },
+      {
+        name: "JavaScript",
+        note: "Where a build step would be overkill",
+        daily: false,
+      },
+      {
+        name: "C++",
+        note: "Kernel and ROM work, when it asks for it",
+        daily: false,
+      },
       { name: "C", note: "Device trees, drivers, the low shelf", daily: false },
     ],
   },
   {
     category: "Frameworks",
     tools: [
-      { name: "Next.js", note: "App Router end to end, server actions included", daily: true },
-      { name: "React", note: "The default surface for everything I build", daily: true },
-      { name: "Tailwind CSS", note: "Design tokens I can keep in my head", daily: true },
-      { name: "Node.js", note: "Workers, webhooks, glue that has to stay up", daily: false },
-      { name: "Express", note: "When a route file is the whole backend", daily: false },
-      { name: "Prisma", note: "Migrations that keep the schema honest", daily: false },
-      { name: "Framer Motion", note: "Motion that explains, not decorates", daily: false },
+      {
+        name: "Next.js",
+        note: "App Router end to end, server actions included",
+        daily: true,
+      },
+      {
+        name: "React",
+        note: "The default surface for everything I build",
+        daily: true,
+      },
+      {
+        name: "Tailwind CSS",
+        note: "Design tokens I can keep in my head",
+        daily: true,
+      },
+      {
+        name: "Node.js",
+        note: "Workers, webhooks, glue that has to stay up",
+        daily: false,
+      },
+      {
+        name: "Express",
+        note: "When a route file is the whole backend",
+        daily: false,
+      },
+      {
+        name: "Prisma",
+        note: "Migrations that keep the schema honest",
+        daily: false,
+      },
+      {
+        name: "Framer Motion",
+        note: "Motion that explains, not decorates",
+        daily: false,
+      },
+      {
+        name: "Playwright",
+        note: "E2E coverage that catches a regression before a client does",
+        daily: false,
+      },
+      {
+        name: "Vitest",
+        note: "Unit tests fast enough that I actually run them",
+        daily: false,
+      },
     ],
   },
   {
     category: "AI",
     tools: [
-      { name: "Gemini API", note: "Streaming answers with citations attached", daily: true },
-      { name: "RAG pipelines", note: "Chunking, retrieval, eval loops I can debug", daily: true },
-      { name: "pgvector", note: "Embeddings living next to the real data", daily: true },
-      { name: "LLM integration", note: "Prompt plumbing, tools, and cost limits", daily: false },
+      {
+        name: "Gemini API",
+        note: "Streaming answers with citations attached",
+        daily: true,
+      },
+      {
+        name: "RAG pipelines",
+        note: "Chunking, retrieval, eval loops I can debug",
+        daily: true,
+      },
+      {
+        name: "pgvector",
+        note: "Embeddings living next to the real data",
+        daily: true,
+      },
+      {
+        name: "LLM integration",
+        note: "Prompt plumbing, tools, and cost limits",
+        daily: false,
+      },
     ],
   },
   {
     category: "Data",
     tools: [
-      { name: "PostgreSQL", note: "First choice, row-level security from day one", daily: true },
-      { name: "Supabase", note: "Auth, storage, realtime without a backend team", daily: true },
-      { name: "MongoDB", note: "Older projects that still pay rent", daily: false },
+      {
+        name: "PostgreSQL",
+        note: "First choice, row-level security from day one",
+        daily: true,
+      },
+      {
+        name: "Supabase",
+        note: "Auth, storage, realtime without a backend team",
+        daily: true,
+      },
+      {
+        name: "MongoDB",
+        note: "Older projects that still pay rent",
+        daily: false,
+      },
     ],
   },
   {
     category: "Infrastructure",
     tools: [
-      { name: "Vercel", note: "Preview per branch, ship on merge", daily: true },
-      { name: "Linux", note: "Daily driver, Wayland session and all", daily: true },
-      { name: "GitHub Actions", note: "CI that keeps building while I sleep", daily: false },
+      {
+        name: "Vercel",
+        note: "Preview per branch, ship on merge",
+        daily: true,
+      },
+      {
+        name: "Linux",
+        note: "Daily driver, Wayland session and all",
+        daily: true,
+      },
+      {
+        name: "GitHub Actions",
+        note: "CI that keeps building while I sleep",
+        daily: false,
+      },
       { name: "Jenkins", note: "ROM pipelines, nightly builds", daily: false },
-      { name: "Bash", note: "The glue under every repeatable task", daily: false },
+      {
+        name: "Bash",
+        note: "The glue under every repeatable task",
+        daily: false,
+      },
       { name: "GCP", note: "Buckets, jobs, the occasional VM", daily: false },
-      { name: "Azure", note: "Client estates that already live there", daily: false },
+      {
+        name: "Azure",
+        note: "Client estates that already live there",
+        daily: false,
+      },
     ],
   },
 ];
