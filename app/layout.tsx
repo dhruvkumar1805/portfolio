@@ -2,9 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { siteConfig } from "@/lib/site-config";
 import ThemeScript from "@/components/ui/ThemeScript";
-import Nav from "@/components/nav/Nav";
-import ScrollProgress from "@/components/ui/ScrollProgress";
-import StatusBar from "@/components/ui/StatusBar";
+import SiteChrome from "@/components/SiteChrome";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
@@ -52,9 +50,7 @@ export default function RootLayout({
         <ThemeScript />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ScrollProgress />
-        <Nav />
-        <StatusBar />
+        <SiteChrome />
         <div className="relative mx-auto max-w-[1010px] px-[clamp(20px,5vw,34px)]">
           {children}
           <Footer />

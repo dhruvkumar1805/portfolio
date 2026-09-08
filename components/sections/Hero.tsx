@@ -6,6 +6,7 @@ import { HiOutlineDocumentText } from "react-icons/hi2";
 import { siteConfig } from "@/lib/site-config";
 import VisitorCounter from "@/components/ui/VisitorCounter";
 import Reveal from "@/components/ui/Reveal";
+import BootDesktop from "@/components/ui/BootDesktop";
 
 const socials = [
   { label: "GitHub", href: siteConfig.github, icon: FaGithub },
@@ -50,9 +51,13 @@ export default function Hero() {
           <span className="text-ink-2">and break them before someone else does.</span>
         </Reveal>
 
+        <Reveal y={16} delay={0.16}>
+          <BootDesktop />
+        </Reveal>
+
         <Reveal
           y={16}
-          delay={0.18}
+          delay={0.22}
           className="flex flex-col overflow-hidden rounded-xl border border-line bg-paper-2 sm:h-[248px] sm:flex-row"
         >
           <div className="flex min-w-0 flex-1 flex-col justify-between p-[clamp(20px,3vw,28px)]">

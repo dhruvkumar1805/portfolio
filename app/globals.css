@@ -75,6 +75,29 @@ body {
   color: var(--paper);
 }
 
+/* While the window manager is up it owns the viewport, so the rest of the
+   document steps aside instead of scrolling behind it. */
+body[data-wm="on"] > *:not(#wm-root) {
+  display: none !important;
+}
+
+.wm-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+  overscroll-behavior: contain;
+}
+.wm-scroll::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+.wm-scroll::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: var(--line);
+}
+.wm-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .no-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;
